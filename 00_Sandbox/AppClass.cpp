@@ -15,11 +15,15 @@ void AppClass::InitVariables(void)
 	m_selection = std::pair<int, int>(-1, -1);
 	//Set the camera position
 	m_pCameraMngr->SetPositionTargetAndView(
-		vector3(0.0f, 2.5f, 15.0f),//Camera position
-		vector3(0.0f, 2.5f, 0.0f),//What Im looking at
+		vector3(0.0f, 15.0f, 15.0f),//Camera position
+		vector3(0.0f, 3.0f, 0.0f),//What Im looking at
 		REAXISY);//What is up
 	//Load a model onto the Mesh manager
 	m_pMeshMngr->LoadModel("Lego\\Unikitty.bto", "Unikitty");
+
+
+
+	//m_pMeshMngr->AddPlaneToQueue(matrix4(vector4(0.0f)), RERED);
 }
 
 void AppClass::Update(void)
@@ -66,7 +70,7 @@ void AppClass::Display(void)
 	switch (m_pCameraMngr->GetCameraMode())
 	{
 	default: //Perspective
-		m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XY); //renders the XY grid with a 100% scale
+		m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XZ); //renders the XY grid with a 100% scale
 		break;
 	case CAMERAMODE::CAMROTHOX:
 		m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::YZ, RERED * 0.75f); //renders the YZ grid with a 100% scale
