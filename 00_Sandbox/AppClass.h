@@ -16,6 +16,17 @@ class AppClass : public ReEngAppClass
 	GameObject* cube = nullptr;
 public:
 	typedef ReEngAppClass super;
+	PrimitiveClass* m_floor = nullptr;
+	PrimitiveClass* m_wallX1 = nullptr;
+	PrimitiveClass* m_wallX2 = nullptr;
+	PrimitiveClass* m_wallZ1 = nullptr;
+	PrimitiveClass* m_wallZ2 = nullptr;
+	matrix4 floorMatrix;
+	matrix4 wallX_Matrix1;
+	matrix4 wallX_Matrix2;
+	matrix4 wallZ_Matrix1;
+	matrix4 wallZ_Matrix2;
+
 
 	/*
 	USAGE: Constructor
