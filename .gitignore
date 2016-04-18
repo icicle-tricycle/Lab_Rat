@@ -36,3 +36,5 @@ Z_DELETE
 *.sdf
 *.opensdf
 Solution_VS15.VC.db
+
+*.opendb
