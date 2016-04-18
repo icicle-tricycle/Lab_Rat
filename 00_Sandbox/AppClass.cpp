@@ -11,6 +11,8 @@ void AppClass::InitWindow(String a_sWindowName)
 
 void AppClass::InitVariables(void)
 {
+	matrix4 cubeMatrix = IDENTITY_M4;
+	GameObject cube;
 	//Reset the selection to -1, -1
 	m_selection = std::pair<int, int>(-1, -1);
 	//Set the camera position
@@ -19,8 +21,8 @@ void AppClass::InitVariables(void)
 		vector3(0.0f, 3.0f, 0.0f),//What Im looking at
 		REAXISY);//What is up
 	//Load a model onto the Mesh manager
-	m_pMeshMngr->LoadModel("Lego\\Unikitty.bto", "Unikitty");
-
+	//m_pMeshMngr->LoadModel("Lego\\Unikitty.bto", "Unikitty");
+	m_pMeshMngr->AddCubeToQueue(cubeMatrix, RERED, SOLID);
 
 
 	//m_pMeshMngr->AddPlaneToQueue(matrix4(vector4(0.0f)), RERED);
