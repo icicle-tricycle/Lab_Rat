@@ -6,21 +6,19 @@
 
 class GameObject
 {
-	vector3 position;
-	vector3 velocity;
-	vector3 acceleration; 
-	std::vector<vector3> vertList;
-
 public:
+	//variables
+	matrix4 position;
+	vector3 velocity;
+	vector3 acceleration;
+
 	//Rule of 3
-	GameObject();
+	GameObject(matrix4 pos, vector3 vel, vector3 accel);
 	GameObject(GameObject const& other);
 	GameObject& operator=(GameObject const& other);
 	~GameObject();
 
-	vector3 GetPostion();
-	vector3 GetVelocity();
-	vector3 GetAcceleration();
+	void Update();
 };
 
 #endif

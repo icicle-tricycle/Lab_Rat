@@ -11,8 +11,7 @@ void AppClass::InitWindow(String a_sWindowName)
 
 void AppClass::InitVariables(void)
 {
-	matrix4 cubeMatrix = IDENTITY_M4;
-	GameObject cube;
+	cube = new GameObject(IDENTITY_M4, vector3(0), vector3(0));
 	//Reset the selection to -1, -1
 	m_selection = std::pair<int, int>(-1, -1);
 	//Set the camera position
@@ -22,7 +21,6 @@ void AppClass::InitVariables(void)
 		REAXISY);//What is up
 	//Load a model onto the Mesh manager
 	//m_pMeshMngr->LoadModel("Lego\\Unikitty.bto", "Unikitty");
-	m_pMeshMngr->AddCubeToQueue(cubeMatrix, RERED, SOLID);
 
 
 	//m_pMeshMngr->AddPlaneToQueue(matrix4(vector4(0.0f)), RERED);
@@ -44,7 +42,7 @@ void AppClass::Update(void)
 	ArcBall();
 	
 	//Set the model matrix for the first model to be the arcball
-	m_pMeshMngr->SetModelMatrix(ToMatrix4(m_qArcBall), 0);
+	//m_pMeshMngr->SetModelMatrix(ToMatrix4(m_qArcBall), 0);
 	
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
@@ -84,6 +82,8 @@ void AppClass::Display(void)
 		m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XY, REBLUE * 0.75f); //renders the XY grid with a 100% scale
 		break;
 	}
+
+	m_pMeshMngr->AddCubeToQueue(cube->position, RERED, SOLID);
 	
 	m_pMeshMngr->Render(); //renders the render list
 
@@ -92,5 +92,6 @@ void AppClass::Display(void)
 
 void AppClass::Release(void)
 {
+	SafeDelete(cube);
 	super::Release(); //release the memory of the inherited fields
 }

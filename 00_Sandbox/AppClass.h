@@ -13,6 +13,7 @@ using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
 class AppClass : public ReEngAppClass
 {
+	GameObject* cube = nullptr;
 public:
 	typedef ReEngAppClass super;
 

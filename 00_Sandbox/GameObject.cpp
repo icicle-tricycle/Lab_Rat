@@ -1,27 +1,17 @@
 #include "GameObject.h"
-//Rule of 3
-GameObject::GameObject() 
+GameObject::GameObject(matrix4 pos, vector3 vel, vector3 accel) 
 {
-	position = vector3(0);
-	velocity = vector3(0);
-	acceleration = vector3(0);
+	position = pos;
+	velocity = vel;
+	acceleration = accel;
 }
 GameObject::GameObject(GameObject const & other) { }
 GameObject & GameObject::operator=(GameObject const & other) { return *this; }
 GameObject::~GameObject() { }
 
-vector3 GameObject::GetPostion()
+void GameObject::Update()
 {
-	return position;
-}
-
-vector3 GameObject::GetVelocity()
-{
-	return velocity;
-}
-
-vector3 GameObject::GetAcceleration()
-{
-	return acceleration;
+	velocity += acceleration;
+	position += glm::translate(velocity);
 }
 
