@@ -32,14 +32,18 @@ void BoundingObjectManager::ReleaseInstance()
 
 void BoundingObjectManager::addBox(std::vector<vector3> a_lListOfVerts)
 {
+	//40% - A
 }
 
 void BoundingObjectManager::toggleVisibilityAABB(int index)
 {
+
+	//40% - B
 }
 
 void BoundingObjectManager::findIndex(BoundingObjectClass obj)
 {
+	//40% - C
 }
 
 void BoundingObjectManager::setColor(int index, vector3 color)
@@ -54,10 +58,14 @@ void BoundingObjectManager::setVisibility(int index,bool input)
 
 void BoundingObjectManager::renderBO()
 {
+	//40% - f
+	//in app.class, kinda, needs to be limited
 }
 
 void BoundingObjectManager::renderBO(int index)
 {
+	//40% - f
+	//nvm, in app.class
 }
 
 void BoundingObjectManager::checkCollisions()

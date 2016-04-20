@@ -10,4 +10,4 @@ A10 - Required Section about contributions:
 Zac: 
 Mike: 
 Caitie: Added collision detection and handling code in BoundingObjectManager.cpp (see checkCollisions and resovleCollisions
-Peter: 
+Peter: Added render logic, initial setup of BoundingObjectManager, various simple methods in BoundingObjectManager
