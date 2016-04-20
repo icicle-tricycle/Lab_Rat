@@ -4,6 +4,7 @@ BoundingObjectManager* BoundingObjectManager::instance = nullptr;
 
 BoundingObjectManager::BoundingObjectManager()
 {
+	boundingObjects = std::vector<MyBoundingObjectClass>();
 }
 
 BoundingObjectManager::~BoundingObjectManager()
@@ -29,11 +30,11 @@ void BoundingObjectManager::ReleaseInstance()
 	}
 }
 
-void BoundingObjectManager::addBox()
+void BoundingObjectManager::addBox(std::vector<vector3> a_lListOfVerts)
 {
 }
 
-void BoundingObjectManager::toggleVisibility(int index)
+void BoundingObjectManager::toggleVisibilityAABB(int index)
 {
 }
 

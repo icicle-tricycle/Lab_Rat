@@ -2,7 +2,7 @@
 
 MyBoundingObjectClass::MyBoundingObjectClass()
 {
-
+	
 }
 
 

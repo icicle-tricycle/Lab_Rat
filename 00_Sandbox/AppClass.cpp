@@ -1,4 +1,6 @@
 #include "AppClass.h"
+#include "BoundingObjectManager.h"
+
 void AppClass::InitWindow(String a_sWindowName)
 {
 	super::InitWindow("Sandbox"); // Window Name
@@ -21,9 +23,6 @@ void AppClass::InitVariables(void)
 		REAXISY);//What is up
 	//Load a model onto the Mesh manager
 	//m_pMeshMngr->LoadModel("Lego\\Unikitty.bto", "Unikitty");
-
-
-	//m_pMeshMngr->AddPlaneToQueue(matrix4(vector4(0.0f)), RERED);
 }
 
 void AppClass::Update(void)
@@ -84,6 +83,32 @@ void AppClass::Display(void)
 	}
 
 	m_pMeshMngr->AddCubeToQueue(cube->position, RERED, SOLID);
+
+	//for each BO
+	for (uint i = 0; i < BoundingObjectManager::GetInstance()->boundingObjects.size(); i++)
+	{
+		MeshClass* temp = new MeshClass();
+
+		//handle mesh here? Should it be a mesh?...
+
+		vector3 tMax = BoundingObjectManager::GetInstance()->boundingObjects[i].GetMax();
+		vector3 tMin = BoundingObjectManager::GetInstance()->boundingObjects[i].GetMin();
+		vector3 tMid = BoundingObjectManager::GetInstance()->boundingObjects[i].GetCentroid();
+
+		temp->AddVertexPosition(vector3(tMin.x, tMin.y, tMin.z));
+		temp->AddVertexPosition(vector3(tMin.x, tMin.y, tMax.z));
+		temp->AddVertexPosition(vector3(tMin.x, tMax.y, tMin.z));
+		temp->AddVertexPosition(vector3(tMin.x, tMax.y, tMax.z));
+		temp->AddVertexPosition(vector3(tMax.x, tMin.y, tMin.z));
+		temp->AddVertexPosition(vector3(tMax.x, tMin.y, tMax.z));
+		temp->AddVertexPosition(vector3(tMax.x, tMax.y, tMin.z));
+		temp->AddVertexPosition(vector3(tMax.x, tMax.y, tMax.z));
+
+		matrix4 tempWorldMatrix = IDENTITY_M4;
+		tempWorldMatrix = glm::translate(tMid);
+
+		m_pMeshMngr->AddMeshToRenderList(temp, tempWorldMatrix);
+	}
 	
 	m_pMeshMngr->Render(); //renders the render list
 
