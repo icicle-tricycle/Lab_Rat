@@ -58,6 +58,11 @@ void MyBoundingObjectClass::SetColor(vector3 a_v3Color)
 	m_v3Color = a_v3Color;
 }
 
+void MyBoundingObjectClass::SetVisible(bool input)
+{
+	m_bVisible = input;
+}
+
 bool MyBoundingObjectClass::IsColliding(MyBoundingObjectClass * const a_pOther)
 {
 
