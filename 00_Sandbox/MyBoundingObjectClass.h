@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __MYBOUNDINGOBJECTCLASS_H_
 #define __MYBOUNDINGOBJECTCLASS_H_
 
@@ -11,6 +10,8 @@ class MyBoundingObjectClass
 	vector3 m_v3Center = vector3(0.0f); //Will store the center point of the Sphere Class
 	vector3 m_v3Min = vector3(0.0f); //Will store the minimum vector of the Sphere Class
 	vector3 m_v3Max = vector3(0.0f); //Will store the maximum vector of the Sphere Class
+	vector3 m_v3Color = REGREEN;
+	bool m_bVisible = true;
 
 public:
 	
