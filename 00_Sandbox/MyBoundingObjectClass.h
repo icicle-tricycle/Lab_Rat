@@ -39,7 +39,8 @@ public:
 	//Set color of BO
 	void SetColor(vector3 a_v3Color);
 
-
+	//set visibility
+	void SetVisible(bool input);
 
 	//Check collision
 	bool IsColliding(MyBoundingObjectClass* const a_pOther);

@@ -1,12 +1,10 @@
 #include "BoundingObjectManager.h"
-#include "MyBoundingObjectClass.h"
 
-
+BoundingObjectManager* BoundingObjectManager::instance = nullptr;
 
 BoundingObjectManager::BoundingObjectManager()
 {
 }
-
 
 BoundingObjectManager::~BoundingObjectManager()
 {
@@ -43,12 +41,14 @@ void BoundingObjectManager::findIndex(BoundingObjectClass obj)
 {
 }
 
-void BoundingObjectManager::setColor(int index)
+void BoundingObjectManager::setColor(int index, vector3 color)
 {
+	boundingObjects[index].SetColor(color);
 }
 
-void BoundingObjectManager::setVisibility(int index)
+void BoundingObjectManager::setVisibility(int index,bool input)
 {
+	boundingObjects[index].SetVisible(input);
 }
 
 void BoundingObjectManager::renderBO()
