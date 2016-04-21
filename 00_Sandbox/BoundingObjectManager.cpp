@@ -56,17 +56,17 @@ void BoundingObjectManager::setVisibility(int index,bool input)
 	boundingObjects[index].SetVisible(input);
 }
 
-void BoundingObjectManager::renderBO()
-{
-	//40% - f
-	//in app.class, kinda, needs to be limited
-}
-
-void BoundingObjectManager::renderBO(int index)
-{
-	//40% - f
-	//nvm, in app.class
-}
+//void BoundingObjectManager::renderBO()
+//{
+//	//40% - f
+//	//in app.class, kinda, needs to be limited
+//}
+//
+//void BoundingObjectManager::renderBO(int index)
+//{
+//	//40% - f
+//	//nvm, in app.class
+//}
 
 void BoundingObjectManager::checkCollisions()
 {

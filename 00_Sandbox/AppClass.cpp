@@ -87,27 +87,30 @@ void AppClass::Display(void)
 	//for each BO
 	for (uint i = 0; i < BoundingObjectManager::GetInstance()->boundingObjects.size(); i++)
 	{
-		MeshClass* temp = new MeshClass();
+		if (BoundingObjectManager::GetInstance()->boundingObjects.at(i).IsVisible)
+		{
+			MeshClass* temp = new MeshClass();
 
-		//handle mesh here? Should it be a mesh?...
+			//handle mesh here? Should it be a mesh?...
 
-		vector3 tMax = BoundingObjectManager::GetInstance()->boundingObjects[i].GetMax();
-		vector3 tMin = BoundingObjectManager::GetInstance()->boundingObjects[i].GetMin();
-		vector3 tMid = BoundingObjectManager::GetInstance()->boundingObjects[i].GetCentroid();
+			vector3 tMax = BoundingObjectManager::GetInstance()->boundingObjects[i].GetMax();
+			vector3 tMin = BoundingObjectManager::GetInstance()->boundingObjects[i].GetMin();
+			vector3 tMid = BoundingObjectManager::GetInstance()->boundingObjects[i].GetCentroid();
 
-		temp->AddVertexPosition(vector3(tMin.x, tMin.y, tMin.z));
-		temp->AddVertexPosition(vector3(tMin.x, tMin.y, tMax.z));
-		temp->AddVertexPosition(vector3(tMin.x, tMax.y, tMin.z));
-		temp->AddVertexPosition(vector3(tMin.x, tMax.y, tMax.z));
-		temp->AddVertexPosition(vector3(tMax.x, tMin.y, tMin.z));
-		temp->AddVertexPosition(vector3(tMax.x, tMin.y, tMax.z));
-		temp->AddVertexPosition(vector3(tMax.x, tMax.y, tMin.z));
-		temp->AddVertexPosition(vector3(tMax.x, tMax.y, tMax.z));
+			temp->AddVertexPosition(vector3(tMin.x, tMin.y, tMin.z));
+			temp->AddVertexPosition(vector3(tMin.x, tMin.y, tMax.z));
+			temp->AddVertexPosition(vector3(tMin.x, tMax.y, tMin.z));
+			temp->AddVertexPosition(vector3(tMin.x, tMax.y, tMax.z));
+			temp->AddVertexPosition(vector3(tMax.x, tMin.y, tMin.z));
+			temp->AddVertexPosition(vector3(tMax.x, tMin.y, tMax.z));
+			temp->AddVertexPosition(vector3(tMax.x, tMax.y, tMin.z));
+			temp->AddVertexPosition(vector3(tMax.x, tMax.y, tMax.z));
 
-		matrix4 tempWorldMatrix = IDENTITY_M4;
-		tempWorldMatrix = glm::translate(tMid);
+			matrix4 tempWorldMatrix = IDENTITY_M4;
+			tempWorldMatrix = glm::translate(tMid);
 
-		m_pMeshMngr->AddMeshToRenderList(temp, tempWorldMatrix);
+			m_pMeshMngr->AddMeshToRenderList(temp, tempWorldMatrix);
+		}
 	}
 	
 	m_pMeshMngr->Render(); //renders the render list
