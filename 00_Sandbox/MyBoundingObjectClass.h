@@ -20,6 +20,7 @@ public:
 
 	//Switch Visibility
 	void IsVisible(bool a_bVisible);
+	bool IsVisible() { return m_bVisible; };
 	
 	//Get Centroid
 	vector3 GetCentroid(void);

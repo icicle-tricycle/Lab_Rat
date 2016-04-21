@@ -87,7 +87,7 @@ void AppClass::Display(void)
 	//for each BO
 	for (uint i = 0; i < BoundingObjectManager::GetInstance()->boundingObjects.size(); i++)
 	{
-		if (BoundingObjectManager::GetInstance()->boundingObjects.at(i).IsVisible)
+		if (BoundingObjectManager::GetInstance()->boundingObjects.at(i).IsVisible())
 		{
 			MeshClass* temp = new MeshClass();
 
