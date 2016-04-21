@@ -32,18 +32,29 @@ void BoundingObjectManager::ReleaseInstance()
 
 void BoundingObjectManager::addBox(std::vector<vector3> a_lListOfVerts)
 {
-	//40% - A
+	boundingObjects.push_back(MyBoundingObjectClass(a_lListOfVerts));
 }
 
 void BoundingObjectManager::toggleVisibilityAABB(int index)
 {
-
-	//40% - B
+	boundingObjects[index].IsVisible(!boundingObjects[index].IsVisible());
 }
 
-void BoundingObjectManager::findIndex(BoundingObjectClass obj)
+int BoundingObjectManager::findIndex(MyBoundingObjectClass obj)
 {
-	//40% - C
+	for (int i = 0; i < boundingObjects.size(); i++) {
+		if (obj.GetModelMatrix() == boundingObjects[i].GetModelMatrix()) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+void BoundingObjectManager::reAlign()
+{
+	for (int i = 0; i < boundingObjects.size(); i++) {
+		boundingObjects[i] = MyBoundingObjectClass(boundingObjects[i].GetVertexList());
+	}
 }
 
 void BoundingObjectManager::setColor(int index, vector3 color)

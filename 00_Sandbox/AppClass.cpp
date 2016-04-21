@@ -1,5 +1,4 @@
 #include "AppClass.h"
-#include "BoundingObjectManager.h"
 
 void AppClass::InitWindow(String a_sWindowName)
 {
@@ -14,6 +13,11 @@ void AppClass::InitWindow(String a_sWindowName)
 void AppClass::InitVariables(void)
 {
 	cube = new GameObject(IDENTITY_M4, vector3(0), vector3(0));
+	manager = BoundingObjectManager::GetInstance();
+	m_pMeshMngr->LoadModel("Minecraft\\Steve.obj", "Steve");
+	m_pMeshMngr->LoadModel("Minecraft\\Creeper.obj", "Creeper");
+	manager->addBox(m_pMeshMngr->GetVertexList("Steve"));
+	manager->addBox(m_pMeshMngr->GetVertexList("Creeper"));
 	//Reset the selection to -1, -1
 	m_selection = std::pair<int, int>(-1, -1);
 	//Set the camera position
@@ -45,6 +49,8 @@ void AppClass::Update(void)
 	
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
+
+	manager->reAlign();
 
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();
@@ -83,6 +89,8 @@ void AppClass::Display(void)
 	}
 
 	m_pMeshMngr->AddCubeToQueue(cube->position, RERED, SOLID);
+
+	manager->checkCollisions();
 
 	//for each BO
 	for (uint i = 0; i < BoundingObjectManager::GetInstance()->boundingObjects.size(); i++)
