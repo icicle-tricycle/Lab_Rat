@@ -87,10 +87,15 @@ void BoundingObjectManager::checkCollisions()
 		for (int j = 0; j < boundingObjects.size(); j++)
 		{
 			//grab mins and maxes for easy use
-			vector3 iMin = vector3(boundingObjects[i].GetModelMatrix() * vector4(boundingObjects[i].GetMin(), 1.0f));
 			vector3 iMax = vector3(boundingObjects[i].GetModelMatrix() * vector4(boundingObjects[i].GetMax(), 1.0f));
 			vector3 jMin = vector3(boundingObjects[j].GetModelMatrix() * vector4(boundingObjects[j].GetMin(), 1.0f));
 			vector3 jMax = vector3(boundingObjects[j].GetModelMatrix() * vector4(boundingObjects[j].GetMax(), 1.0f));
+			vector3 iMin = vector3(boundingObjects[i].GetModelMatrix() * vector4(boundingObjects[i].GetMin(), 1.0f));
+																						 
+			/*vector3 iMin = boundingObjects[i].GetMin();
+			vector3 iMax = boundingObjects[i].GetMax();
+			vector3 jMin = boundingObjects[j].GetMin();
+			vector3 jMax = boundingObjects[j].GetMax();*/
 
 			if ((iMin.x > jMin.x && iMin.x < jMax.x)||
 				(iMax.x > jMin.x && iMax.x < jMax.x)&&

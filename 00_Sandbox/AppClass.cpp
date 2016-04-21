@@ -50,7 +50,7 @@ void AppClass::Update(void)
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
 
-	manager->reAlign();
+	BoundingObjectManager::GetInstance()->reAlign();
 
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();
@@ -90,7 +90,7 @@ void AppClass::Display(void)
 
 	m_pMeshMngr->AddCubeToQueue(cube->position, RERED, SOLID);
 
-	manager->checkCollisions();
+	BoundingObjectManager::GetInstance()->checkCollisions();
 
 	//for each BO
 	for (uint i = 0; i < BoundingObjectManager::GetInstance()->boundingObjects.size(); i++)
