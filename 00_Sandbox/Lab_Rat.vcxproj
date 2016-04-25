@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F5D6D2E1-6FFD-402B-8EE3-DED4FE407028}</ProjectGuid>
-    <RootNamespace>00_Sandbox</RootNamespace>
-    <ProjectName>00_Sandbox</ProjectName>
+    <RootNamespace>Lab_Rat</RootNamespace>
+    <ProjectName>Lab_Rat</ProjectName>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
