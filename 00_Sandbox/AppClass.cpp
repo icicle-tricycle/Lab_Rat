@@ -18,6 +18,28 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->LoadModel("Minecraft\\Creeper.obj", "Creeper");
 	manager->addBox(m_pMeshMngr->GetVertexList("Steve"));
 	manager->addBox(m_pMeshMngr->GetVertexList("Creeper"));
+	matrix4 cubeMatrix = IDENTITY_M4;
+	
+	m_floor = new PrimitiveClass();
+	m_floor->GeneratePlane(80.0f, vector3(1.0f));
+	floorMatrix = glm::rotate(IDENTITY_M4, 90.0f, REAXISX);
+	m_wallX1 = new PrimitiveClass();
+	m_wallX1->GeneratePlane(80.0f, vector3(1.0f));
+	wallX_Matrix1 = glm::rotate(IDENTITY_M4, 90.0f, REAXISY);
+	wallX_Matrix1 *= glm::translate(vector3(0.0f, 0.0f, -40.0f));
+	m_wallX2 = new PrimitiveClass();
+	m_wallX2->GeneratePlane(80.0f, vector3(1.0f));
+	wallX_Matrix2 = glm::rotate(IDENTITY_M4, 90.0f, REAXISY);
+	wallX_Matrix2 *= glm::translate(vector3(0.0f, 0.0f, 40.0f));
+	m_wallZ1 = new PrimitiveClass();
+	m_wallZ1->GeneratePlane(80.0f, vector3(1.0f));
+	wallZ_Matrix1 = IDENTITY_M4;
+	wallZ_Matrix1 *= glm::translate(vector3(0.0f, 0.0f, 40.0f));
+	m_wallZ2 = new PrimitiveClass();
+	m_wallZ2->GeneratePlane(80.0f, vector3(1.0f));
+	wallZ_Matrix2 = IDENTITY_M4;
+	wallZ_Matrix2 *= glm::translate(vector3(0.0f, 0.0f, -40.0f));
+	
 	//Reset the selection to -1, -1
 	m_selection = std::pair<int, int>(-1, -1);
 	//Set the camera position
@@ -27,6 +49,8 @@ void AppClass::InitVariables(void)
 		REAXISY);//What is up
 	//Load a model onto the Mesh manager
 	//m_pMeshMngr->LoadModel("Lego\\Unikitty.bto", "Unikitty");
+	//m_pMeshMngr->AddPlaneToQueue(matrix4(vector4(0.0f)), RERED);
+	m_pMeshMngr->AddCubeToQueue(cubeMatrix, RERED, SOLID);
 }
 
 void AppClass::Update(void)
@@ -122,6 +146,12 @@ void AppClass::Display(void)
 	}
 	
 	m_pMeshMngr->Render(); //renders the render list
+	m_floor->Render(m_pCameraMngr->GetProjectionMatrix(), m_pCameraMngr->GetViewMatrix(), floorMatrix);
+
+	m_wallX1->Render(m_pCameraMngr->GetProjectionMatrix(), m_pCameraMngr->GetViewMatrix(), wallX_Matrix1);
+	m_wallX2->Render(m_pCameraMngr->GetProjectionMatrix(), m_pCameraMngr->GetViewMatrix(), wallX_Matrix2);
+	m_wallZ1->Render(m_pCameraMngr->GetProjectionMatrix(), m_pCameraMngr->GetViewMatrix(), wallZ_Matrix1);
+	m_wallZ2->Render(m_pCameraMngr->GetProjectionMatrix(), m_pCameraMngr->GetViewMatrix(), wallZ_Matrix2);
 
 	m_pGLSystem->GLSwapBuffers(); //Swaps the OpenGL buffers
 }
