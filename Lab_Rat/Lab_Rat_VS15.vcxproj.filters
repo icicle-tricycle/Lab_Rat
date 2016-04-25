@@ -22,6 +22,7 @@
     <ClCompile Include="MyBoundingObjectClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppClass.h">
@@ -42,6 +43,7 @@
     <ClInclude Include="MyBoundingObjectClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
