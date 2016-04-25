@@ -12,6 +12,7 @@ MyBoundingObjectClass::~MyBoundingObjectClass()
 
 MyBoundingObjectClass::MyBoundingObjectClass(std::vector<vector3> a_lListOfVerts)
 {
+	m_vertexList = a_lListOfVerts;
 	uint nVertexCount = a_lListOfVerts.size();
 
 	if (nVertexCount > 0)

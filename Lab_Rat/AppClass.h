@@ -8,12 +8,15 @@ Date: 2015/09 (Last Modified on: 15/11)
 #include "RE\ReEngAppClass.h"
 #include <SFML\Graphics.hpp>
 #include "GameObject.h"
+#include "BoundingObjectManager.h"
+
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
 class AppClass : public ReEngAppClass
 {
 	GameObject* cube = nullptr;
+	BoundingObjectManager* manager = nullptr;
 public:
 	typedef ReEngAppClass super;
 
