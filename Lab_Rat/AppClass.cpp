@@ -1,4 +1,5 @@
 #include "AppClass.h"
+
 void AppClass::InitWindow(String a_sWindowName)
 {
 	super::InitWindow("Sandbox"); // Window Name
@@ -12,6 +13,11 @@ void AppClass::InitWindow(String a_sWindowName)
 void AppClass::InitVariables(void)
 {
 	cube = new GameObject(IDENTITY_M4, vector3(0), vector3(0));
+	manager = BoundingObjectManager::GetInstance();
+	m_pMeshMngr->LoadModel("Minecraft\\Steve.obj", "Steve");
+	m_pMeshMngr->LoadModel("Minecraft\\Creeper.obj", "Creeper");
+	manager->addBox(m_pMeshMngr->GetVertexList("Steve"));
+	manager->addBox(m_pMeshMngr->GetVertexList("Creeper"));
 	//Reset the selection to -1, -1
 	m_selection = std::pair<int, int>(-1, -1);
 	//Set the camera position
@@ -21,9 +27,6 @@ void AppClass::InitVariables(void)
 		REAXISY);//What is up
 	//Load a model onto the Mesh manager
 	//m_pMeshMngr->LoadModel("Lego\\Unikitty.bto", "Unikitty");
-
-
-	//m_pMeshMngr->AddPlaneToQueue(matrix4(vector4(0.0f)), RERED);
 }
 
 void AppClass::Update(void)
@@ -46,6 +49,8 @@ void AppClass::Update(void)
 	
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
+
+	BoundingObjectManager::GetInstance()->reAlign();
 
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();
@@ -84,6 +89,37 @@ void AppClass::Display(void)
 	}
 
 	m_pMeshMngr->AddCubeToQueue(cube->position, RERED, SOLID);
+
+	BoundingObjectManager::GetInstance()->checkCollisions();
+
+	//for each BO
+	for (uint i = 0; i < BoundingObjectManager::GetInstance()->boundingObjects.size(); i++)
+	{
+		if (BoundingObjectManager::GetInstance()->boundingObjects.at(i).IsVisible())
+		{
+			MeshClass* temp = new MeshClass();
+
+			//handle mesh here? Should it be a mesh?...
+
+			vector3 tMax = BoundingObjectManager::GetInstance()->boundingObjects[i].GetMax();
+			vector3 tMin = BoundingObjectManager::GetInstance()->boundingObjects[i].GetMin();
+			vector3 tMid = BoundingObjectManager::GetInstance()->boundingObjects[i].GetCentroid();
+
+			temp->AddVertexPosition(vector3(tMin.x, tMin.y, tMin.z));
+			temp->AddVertexPosition(vector3(tMin.x, tMin.y, tMax.z));
+			temp->AddVertexPosition(vector3(tMin.x, tMax.y, tMin.z));
+			temp->AddVertexPosition(vector3(tMin.x, tMax.y, tMax.z));
+			temp->AddVertexPosition(vector3(tMax.x, tMin.y, tMin.z));
+			temp->AddVertexPosition(vector3(tMax.x, tMin.y, tMax.z));
+			temp->AddVertexPosition(vector3(tMax.x, tMax.y, tMin.z));
+			temp->AddVertexPosition(vector3(tMax.x, tMax.y, tMax.z));
+
+			matrix4 tempWorldMatrix = IDENTITY_M4;
+			tempWorldMatrix = glm::translate(tMid);
+
+			m_pMeshMngr->AddMeshToRenderList(temp, tempWorldMatrix);
+		}
+	}
 	
 	m_pMeshMngr->Render(); //renders the render list
 

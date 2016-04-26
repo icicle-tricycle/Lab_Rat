@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F5D6D2E1-6FFD-402B-8EE3-DED4FE407028}</ProjectGuid>
-    <RootNamespace>00_Sandbox</RootNamespace>
-    <ProjectName>00_Sandbox</ProjectName>
+    <RootNamespace>Lab_Rat</RootNamespace>
+    <ProjectName>Lab_Rat</ProjectName>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -158,21 +158,33 @@ xcopy "$(SolutionDir)include\RE\Shaders" "$(SolutionDir)_Binary\Shaders" /y</Com
   <ItemGroup>
     <ClCompile Include="AppClass.cpp" />
     <ClCompile Include="AppClassControls.cpp" />
+    <ClCompile Include="BoundingObjectManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Main.cpp" />
+<<<<<<< HEAD:00_Sandbox/00_Sandbox_VS15.vcxproj
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="TestSubject.cpp" />
     <ClCompile Include="Trap.cpp" />
+=======
+    <ClCompile Include="MyBoundingObjectClass.cpp" />
+    <ClCompile Include="PlayerObject.cpp" />
+>>>>>>> cd9f5f8d7e2eee09319350399cf95b4c5462e8cd:Lab_Rat/Lab_Rat_VS15.vcxproj
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\res\Resource.h" />
     <ClInclude Include="AppClass.h" />
+    <ClInclude Include="BoundingObjectManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InputManager.h" />
+<<<<<<< HEAD:00_Sandbox/00_Sandbox_VS15.vcxproj
     <ClInclude Include="Player.h" />
     <ClInclude Include="TestSubject.h" />
     <ClInclude Include="Trap.h" />
+=======
+    <ClInclude Include="MyBoundingObjectClass.h" />
+    <ClInclude Include="PlayerObject.h" />
+>>>>>>> cd9f5f8d7e2eee09319350399cf95b4c5462e8cd:Lab_Rat/Lab_Rat_VS15.vcxproj
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\res\BTO.rc" />
