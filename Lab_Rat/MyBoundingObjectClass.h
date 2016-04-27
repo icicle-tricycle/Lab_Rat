@@ -14,10 +14,12 @@ class MyBoundingObjectClass
 	vector3 m_v3Color = REGREEN;
 	bool m_bVisible = true;
 
+	uint index;
+
 public:
 	
 	//Add BO
-	MyBoundingObjectClass(std::vector<vector3> a_lListOfVerts);
+	MyBoundingObjectClass(std::vector<vector3> a_lListOfVerts, uint dex);
 
 	//Switch Visibility
 	void IsVisible(bool a_bVisible);

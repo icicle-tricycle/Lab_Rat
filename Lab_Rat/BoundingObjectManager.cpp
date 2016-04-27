@@ -5,6 +5,7 @@ BoundingObjectManager* BoundingObjectManager::instance = nullptr;
 BoundingObjectManager::BoundingObjectManager()
 {
 	boundingObjects = std::vector<MyBoundingObjectClass>();
+	gameObjects = std::vector<GameObject>();
 }
 
 BoundingObjectManager::~BoundingObjectManager()
@@ -32,7 +33,8 @@ void BoundingObjectManager::ReleaseInstance()
 
 void BoundingObjectManager::addBox(std::vector<vector3> a_lListOfVerts)
 {
-	boundingObjects.push_back(MyBoundingObjectClass(a_lListOfVerts));
+	boundingObjects.push_back(MyBoundingObjectClass(a_lListOfVerts, boundingObjects.size()));
+	gameObjects.push_back(GameObject(boundingObjects[boundingObjects.size() - 1].GetModelMatrix(), vector3(0.0f, 0.0f, 0.0f), vector3(0.0f, 0.0f, 0.0f), boundingObjects.size()));
 }
 
 void BoundingObjectManager::toggleVisibilityAABB(int index)
