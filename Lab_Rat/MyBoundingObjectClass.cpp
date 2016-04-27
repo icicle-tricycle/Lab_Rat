@@ -10,7 +10,7 @@ MyBoundingObjectClass::~MyBoundingObjectClass()
 {
 }
 
-MyBoundingObjectClass::MyBoundingObjectClass(std::vector<vector3> a_lListOfVerts)
+MyBoundingObjectClass::MyBoundingObjectClass(std::vector<vector3> a_lListOfVerts, uint dex)
 {
 	m_vertexList = a_lListOfVerts;
 	uint nVertexCount = a_lListOfVerts.size();
@@ -41,6 +41,8 @@ MyBoundingObjectClass::MyBoundingObjectClass(std::vector<vector3> a_lListOfVerts
 
 	m_v3Center = (m_v3Max + m_v3Min) / 2.0f;
 	m_fRadius = glm::distance(m_v3Center, m_v3Max);
+
+	index = dex;
 }
 
 void MyBoundingObjectClass::IsVisible(bool a_bVisible)

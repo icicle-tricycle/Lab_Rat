@@ -1,5 +1,6 @@
 #pragma once
 #include "MyBoundingObjectClass.h"
+#include "GameObject.h"
 #include <vector>
 #include "RE\ReEngAppClass.h"
 
@@ -10,6 +11,7 @@ public:
 	~BoundingObjectManager();
 
 	std::vector<MyBoundingObjectClass> boundingObjects;
+	std::vector<GameObject> gameObjects;
 
 	static BoundingObjectManager* GetInstance();
 	static void ReleaseInstance();

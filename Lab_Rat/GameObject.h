@@ -12,8 +12,10 @@ public:
 	vector3 velocity;
 	vector3 acceleration;
 
+	uint index;		//index on the game object vector for the Bounding Manager
+
 	//Rule of 3
-	GameObject(matrix4 pos, vector3 vel, vector3 accel);
+	GameObject(matrix4 pos, vector3 vel, vector3 accel, uint dex);
 	GameObject(GameObject const& other);
 	GameObject& operator=(GameObject const& other);
 	~GameObject();
