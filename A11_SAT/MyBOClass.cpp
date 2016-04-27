@@ -322,4 +322,5 @@ bool MyBOClass::IsColliding(MyBOClass* const a_pOther)
 		bColliding = true;
 
 		return bColliding;
+	}
 }
