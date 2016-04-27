@@ -75,20 +75,22 @@ void AppClass::Display(void)
 	switch (m_pCameraMngr->GetCameraMode())
 	{
 	default: //Perspective
-		m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XZ); //renders the XY grid with a 100% scale
+		m_pMeshMngr->AddGridToRenderList(1.0f, REAXIS::XZ, RERED * 0.75f);
+		//m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XZ); //renders the XY grid with a 100% scale
 		break;
 	case CAMERAMODE::CAMROTHOX:
-		m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::YZ, RERED * 0.75f); //renders the YZ grid with a 100% scale
+		m_pMeshMngr->AddGridToRenderList/*AddGridToQueue*/(1.0f, REAXIS::YZ, RERED * 0.75f); //renders the YZ grid with a 100% scale
 		break;
 	case CAMERAMODE::CAMROTHOY:
-		m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XZ, REGREEN * 0.75f); //renders the XZ grid with a 100% scale
+		m_pMeshMngr->AddGridToRenderList/*AddGridToQueue*/(1.0f, REAXIS::XZ, REGREEN * 0.75f); //renders the XZ grid with a 100% scale
 		break;
 	case CAMERAMODE::CAMROTHOZ:
-		m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XY, REBLUE * 0.75f); //renders the XY grid with a 100% scale
+		m_pMeshMngr->AddGridToRenderList/*AddGridToQueue*/(1.0f, REAXIS::XY, REBLUE * 0.75f); //renders the XY grid with a 100% scale
 		break;
 	}
-
-	m_pMeshMngr->AddCubeToQueue(cube->position, RERED, SOLID);
+	
+	//m_pMeshMngr->AddCubeToQueue(cube->position, RERED, SOLID);
+	m_pMeshMngr->AddCubeToRenderList(cube->position, RERED, SOLID);
 
 	BoundingObjectManager::GetInstance()->checkCollisions();
 
