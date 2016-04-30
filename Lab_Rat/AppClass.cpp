@@ -19,9 +19,9 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->LoadModel("Sorted\\Plane.obj", "Plane");
 	m_pMeshMngr->LoadModel("BackedUp\\Cube.obj", "Cube");
 	//manager->addBox(m_pMeshMngr->GetVertexList("Steve"));
-	manager->addBox(m_pMeshMngr->GetVertexList("Creeper"));
-	manager->addBox(m_pMeshMngr->GetVertexList("Plane"));
-	manager->addBox(m_pMeshMngr->GetVertexList("Cube"));
+	manager->addBox(m_pMeshMngr->GetVertexList("Creeper"), "Creeper");
+	manager->addBox(m_pMeshMngr->GetVertexList("Plane"), "Plane");
+	manager->addBox(m_pMeshMngr->GetVertexList("Cube"), "Cube");
 
 	m_pMeshMngr->SetModelMatrix(glm::translate(vector3(-5.0f, 2.0f, 0.0f)), "Creeper");
 	m_pMeshMngr->SetModelMatrix(glm::translate(vector3(2.0f, 2.0f, 0.0f)), "Plane");

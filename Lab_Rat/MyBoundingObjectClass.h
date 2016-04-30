@@ -18,7 +18,7 @@ class MyBoundingObjectClass
 	matrix4 m_m4ToWorld = IDENTITY_M4; //Matrix that will take us from local to world coordinate
 	vector3 m_v3Color = REGREEN;
 	
-	bool m_bVisible = true;
+	//bool m_bVisible = true;
 
 	vector3 m_v3CenterG = vector3(0.0f); //Will store the center point of the Object Class
 	vector3 m_v3MinG = vector3(0.0f); //Will store the minimum vector of the Object Class

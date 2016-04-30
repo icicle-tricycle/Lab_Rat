@@ -55,7 +55,7 @@ void BoundingObjectManager::toggleVisibilityAABB(int index)
 	boundingObjects[index]->IsVisible(!boundingObjects[index]->IsVisible());
 }
 
-int BoundingObjectManager::findIndex(MyBoundingObjectClass obj)
+/*int BoundingObjectManager::findIndex(MyBoundingObjectClass obj)
 {
 	for (int i = 0; i < boundingObjects.size(); i++) {
 		if (obj.GetModelMatrix() == boundingObjects[i]->GetModelMatrix()) {
@@ -63,7 +63,7 @@ int BoundingObjectManager::findIndex(MyBoundingObjectClass obj)
 		}
 	}
 	return -1;
-}
+}*/
 
 void BoundingObjectManager::reAlign()
 {
@@ -140,8 +140,8 @@ void BoundingObjectManager::checkCollisions()
 	}
 }
 
-void BoundingObjectManager::SetModelMatrix(matrix4 i_matrix, String name)
-{
+//void BoundingObjectManager::SetModelMatrix(matrix4 i_matrix, String name)
+//{
 	/*
 
 
@@ -155,7 +155,7 @@ void BoundingObjectManager::SetModelMatrix(matrix4 i_matrix, String name)
 	
 	
 	*/
-}
+//}
 
 void BoundingObjectManager::resolveCollision(int index1, int index2)
 {

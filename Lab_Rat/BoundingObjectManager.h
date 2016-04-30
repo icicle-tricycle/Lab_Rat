@@ -21,7 +21,7 @@ public:
 
 	void addBox(std::vector<vector3> a_lListOfVerts, String name); //a
 	void toggleVisibilityAABB(int index); //b
-	int findIndex(MyBoundingObjectClass obj);//Get index of BO //c
+	//int findIndex(MyBoundingObjectClass obj);//Get index of BO //c
 	void reAlign();
 	void setColor(int index, vector3 color);//d
 	void setVisibility(int index, bool input);//e
