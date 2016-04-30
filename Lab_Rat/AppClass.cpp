@@ -2,7 +2,7 @@
 
 void AppClass::InitWindow(String a_sWindowName)
 {
-	super::InitWindow("Sandbox"); // Window Name
+	super::InitWindow("Lab Rat"); // Window Name
 
 	// Set the clear color based on Microsoft's CornflowerBlue (default in XNA)
 	//if this line is in Init Application it will depend on the .cfg file, if it
@@ -12,12 +12,28 @@ void AppClass::InitWindow(String a_sWindowName)
 
 void AppClass::InitVariables(void)
 {
-	cube = new GameObject(IDENTITY_M4, vector3(0), vector3(0));
+	//cube = new GameObject(IDENTITY_M4, vector3(0), vector3(0));
 	manager = BoundingObjectManager::GetInstance();
-	m_pMeshMngr->LoadModel("Minecraft\\Steve.obj", "Steve");
+
+	//m_pMeshMngr->LoadModel("Minecraft\\Steve.obj", "Steve");
 	m_pMeshMngr->LoadModel("Minecraft\\Creeper.obj", "Creeper");
-	manager->addBox(m_pMeshMngr->GetVertexList("Steve"));
+	m_pMeshMngr->LoadModel("Sorted\\Plane.obj", "Plane");
+	m_pMeshMngr->LoadModel("BackedUp\\Cube.obj", "Cube");
+	//manager->addBox(m_pMeshMngr->GetVertexList("Steve"));
 	manager->addBox(m_pMeshMngr->GetVertexList("Creeper"));
+	manager->addBox(m_pMeshMngr->GetVertexList("Plane"));
+	manager->addBox(m_pMeshMngr->GetVertexList("Cube"));
+
+	m_pMeshMngr->SetModelMatrix(glm::translate(vector3(-5.0f, 2.0f, 0.0f)), "Creeper");
+	m_pMeshMngr->SetModelMatrix(glm::translate(vector3(2.0f, 2.0f, 0.0f)), "Plane");
+
+	m_pMeshMngr->SetModelMatrix(
+		glm::translate(
+			glm::scale(vector3(3.0f, 0.0f, 3.0f)),
+			vector3(0.0f, 0.0f, 0.0f)),
+		"Cube"
+		);
+
 	//Reset the selection to -1, -1
 	m_selection = std::pair<int, int>(-1, -1);
 	//Set the camera position
@@ -90,7 +106,7 @@ void AppClass::Display(void)
 	}
 	
 	//m_pMeshMngr->AddCubeToQueue(cube->position, RERED, SOLID);
-	m_pMeshMngr->AddCubeToRenderList(cube->position, RERED, SOLID);
+	//m_pMeshMngr->AddCubeToRenderList(cube->position, RERED, SOLID);
 
 	BoundingObjectManager::GetInstance()->checkCollisions();
 

@@ -5,7 +5,6 @@ BoundingObjectManager* BoundingObjectManager::instance = nullptr;
 BoundingObjectManager::BoundingObjectManager()
 {
 	boundingObjects = std::vector<MyBoundingObjectClass>();
-	gameObjects = std::vector<GameObject>();
 }
 
 BoundingObjectManager::~BoundingObjectManager()
@@ -33,8 +32,8 @@ void BoundingObjectManager::ReleaseInstance()
 
 void BoundingObjectManager::addBox(std::vector<vector3> a_lListOfVerts)
 {
-	boundingObjects.push_back(MyBoundingObjectClass(a_lListOfVerts, boundingObjects.size()));
-	gameObjects.push_back(GameObject(boundingObjects[boundingObjects.size() - 1].GetModelMatrix(), vector3(0.0f, 0.0f, 0.0f), vector3(0.0f, 0.0f, 0.0f), boundingObjects.size()));
+	boundingObjects.push_back(MyBoundingObjectClass(a_lListOfVerts));
+	//gameObjects.push_back(GameObject(boundingObjects[boundingObjects.size() - 1].GetModelMatrix(), vector3(0.0f, 0.0f, 0.0f), vector3(0.0f, 0.0f, 0.0f)));
 }
 
 void BoundingObjectManager::toggleVisibilityAABB(int index)
@@ -125,6 +124,23 @@ void BoundingObjectManager::checkCollisions()
 			}
 		}
 	}
+}
+
+void BoundingObjectManager::SetModelMatrix(matrix4 i_matrix, String name)
+{
+	/*
+
+
+	//find the object
+	int nIndex = this->GetIndex(a_sIndex);
+	if (nIndex < 0) //if not found return
+		return;
+
+	m_lObject[nIndex]->SetModelMatrix(a_mModelMatrix);//set the matrix for the indexed Object
+	
+	
+	
+	*/
 }
 
 void BoundingObjectManager::resolveCollision(int index1, int index2)

@@ -2,25 +2,26 @@
 #ifndef __GAMEOBJECT_H_
 #define __GAMEOBJECT_H_
 
-#include "RE\ReEng.h"
+#include "BoundingObjectManager.h"
 
 class GameObject
 {
 public:
 	//variables
-	matrix4 position;
+	vector3 position;
 	vector3 velocity;
 	vector3 acceleration;
-
-	uint index;		//index on the game object vector for the Bounding Manager
+	String name = "";
+	
 
 	//Rule of 3
-	GameObject(matrix4 pos, vector3 vel, vector3 accel, uint dex);
+	GameObject(vector3 pos, vector3 vel, vector3 accel);
 	GameObject(GameObject const& other);
 	GameObject& operator=(GameObject const& other);
 	~GameObject();
 
 	void Update();
+	void Display();
 };
 
 #endif

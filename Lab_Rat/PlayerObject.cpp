@@ -2,7 +2,7 @@
 
 
 
-PlayerObject::PlayerObject(matrix4 pos, vector3 vel, vector3 accel)
+PlayerObject::PlayerObject(vector3 pos, vector3 vel, vector3 accel)
 	: GameObject(pos, vel, accel)
 {
 	position = pos;
@@ -37,5 +37,5 @@ void PlayerObject::Update()
 
 	//basic movement stuff
 	velocity += acceleration;
-	position += glm::translate(velocity);
+	position += velocity;
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include "MyBoundingObjectClass.h"
-#include "GameObject.h"
-#include <vector>
+//#include "GameObject.h"
+//#include <vector>
 #include "RE\ReEngAppClass.h"
 
 class BoundingObjectManager
@@ -11,7 +11,6 @@ public:
 	~BoundingObjectManager();
 
 	std::vector<MyBoundingObjectClass> boundingObjects;
-	std::vector<GameObject> gameObjects;
 
 	static BoundingObjectManager* GetInstance();
 	static void ReleaseInstance();
@@ -25,6 +24,8 @@ public:
 	//void renderBO();//f - all BOs
 	//void renderBO(int index);//f - single BO
 	void checkCollisions();//g
+
+	void SetModelMatrix(matrix4 i_matrix, String name);
 
 private:
 	static BoundingObjectManager* instance;
