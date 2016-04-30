@@ -5,11 +5,6 @@ MyBoundingObjectClass::MyBoundingObjectClass()
 	m_pMeshMngr = MeshManagerSingleton::GetInstance();
 }
 
-
-MyBoundingObjectClass::~MyBoundingObjectClass()
-{
-}
-
 MyBoundingObjectClass::MyBoundingObjectClass(std::vector<vector3> a_lListOfVerts)
 {
 	m_vertexList = a_lListOfVerts;

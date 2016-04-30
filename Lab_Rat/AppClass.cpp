@@ -14,7 +14,6 @@ void AppClass::InitVariables(void)
 {
 	//cube = new GameObject(IDENTITY_M4, vector3(0), vector3(0));
 	manager = BoundingObjectManager::GetInstance();
-
 	//m_pMeshMngr->LoadModel("Minecraft\\Steve.obj", "Steve");
 	m_pMeshMngr->LoadModel("Minecraft\\Creeper.obj", "Creeper");
 	m_pMeshMngr->LoadModel("Sorted\\Plane.obj", "Plane");
@@ -34,6 +33,8 @@ void AppClass::InitVariables(void)
 		"Cube"
 		);
 
+	manager->addBox(m_pMeshMngr->GetVertexList("Steve"), "Steve");
+	manager->addBox(m_pMeshMngr->GetVertexList("Creeper"), "Creeper");
 	//Reset the selection to -1, -1
 	m_selection = std::pair<int, int>(-1, -1);
 	//Set the camera position
@@ -66,7 +67,7 @@ void AppClass::Update(void)
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
 
-	BoundingObjectManager::GetInstance()->reAlign();
+	manager->reAlign();
 
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();
@@ -108,20 +109,20 @@ void AppClass::Display(void)
 	//m_pMeshMngr->AddCubeToQueue(cube->position, RERED, SOLID);
 	//m_pMeshMngr->AddCubeToRenderList(cube->position, RERED, SOLID);
 
-	BoundingObjectManager::GetInstance()->checkCollisions();
+	manager->checkCollisions();
 
 	//for each BO
-	for (uint i = 0; i < BoundingObjectManager::GetInstance()->boundingObjects.size(); i++)
+	for (uint i = 0; i < manager->boundingObjects.size(); i++)
 	{
-		if (BoundingObjectManager::GetInstance()->boundingObjects.at(i).IsVisible())
+		if (manager->boundingObjects[i]->IsVisible())
 		{
 			MeshClass* temp = new MeshClass();
 
 			//handle mesh here? Should it be a mesh?...
 
-			vector3 tMax = BoundingObjectManager::GetInstance()->boundingObjects[i].GetMax();
-			vector3 tMin = BoundingObjectManager::GetInstance()->boundingObjects[i].GetMin();
-			vector3 tMid = BoundingObjectManager::GetInstance()->boundingObjects[i].GetCentroid();
+			vector3 tMax = manager->boundingObjects[i]->GetMax();
+			vector3 tMin = manager->boundingObjects[i]->GetMin();
+			vector3 tMid = manager->boundingObjects[i]->GetCentroid();
 
 			temp->AddVertexPosition(vector3(tMin.x, tMin.y, tMin.z));
 			temp->AddVertexPosition(vector3(tMin.x, tMin.y, tMax.z));

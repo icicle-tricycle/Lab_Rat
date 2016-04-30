@@ -1,21 +1,25 @@
 #pragma once
 #include "MyBoundingObjectClass.h"
-//#include "GameObject.h"
-//#include <vector>
 #include "RE\ReEngAppClass.h"
 
 class BoundingObjectManager
 {
 public:
+
+	uint ObjectCount = 0;
+
 	BoundingObjectManager();
 	~BoundingObjectManager();
 
-	std::vector<MyBoundingObjectClass> boundingObjects;
+	std::vector<MyBoundingObjectClass*> boundingObjects;
+	MeshManagerSingleton* meshMngr = nullptr;
+	std::vector<std::vector<int>> collidingIndicies;
+	std::map<String, uint> mapIndex;
 
 	static BoundingObjectManager* GetInstance();
 	static void ReleaseInstance();
 
-	void addBox(std::vector<vector3> a_lListOfVerts);//a
+	void addBox(std::vector<vector3> a_lListOfVerts, String name); //a
 	void toggleVisibilityAABB(int index); //b
 	int findIndex(MyBoundingObjectClass obj);//Get index of BO //c
 	void reAlign();
@@ -25,7 +29,13 @@ public:
 	//void renderBO(int index);//f - single BO
 	void checkCollisions();//g
 
-	void SetModelMatrix(matrix4 i_matrix, String name);
+	MyBoundingObjectClass* GetBO(String n_Index);
+	MyBoundingObjectClass* GetBO(uint i_Index);
+	void SetModelMatrix(matrix4 model, String n_Index);
+	//void Update();
+	std::vector<int> GetCollidingVector(String n_Index);
+	std::vector<int> GetCollidingVector(uint i_Index);
+	int GetIndex(String n_Index);
 
 private:
 	static BoundingObjectManager* instance;

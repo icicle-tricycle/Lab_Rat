@@ -5,7 +5,7 @@
 class PlayerObject: public GameObject
 {
 public:
-	PlayerObject::PlayerObject(vector3 pos, vector3 vel, vector3 accel);
+	PlayerObject::PlayerObject(String name, vector3 pos, vector3 vel, vector3 accel, float ObjMass);
 	~PlayerObject();
 
 	void Update();

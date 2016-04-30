@@ -2,12 +2,12 @@
 
 
 
-PlayerObject::PlayerObject(vector3 pos, vector3 vel, vector3 accel)
-	: GameObject(pos, vel, accel)
+PlayerObject::PlayerObject(String name, vector3 pos, vector3 vel, vector3 accel, float ObjMass)
+	: GameObject(name, pos, vel, accel, ObjMass)
 {
-	position = pos;
+	/*position = pos;
 	velocity = vel;
-	acceleration = accel;
+	acceleration = accel;*/
 }
 
 
