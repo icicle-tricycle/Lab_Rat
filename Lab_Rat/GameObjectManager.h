@@ -12,6 +12,7 @@ public:
 	static void ReleaseInstance();
 
 	void AddGameObject(String i_name);
+	void AddGameObject(String i_name, vector3 i_pos, float i_mass);
 
 	GameObject GetGameObject(String name);
 	GameObject GetGameObject(uint index);

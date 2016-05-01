@@ -21,7 +21,7 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->LoadModel("Minecraft\\Creeper.obj", "Creeper");
 	m_pMeshMngr->LoadModel("Sorted\\Plane.obj", "Plane");
 	m_pMeshMngr->LoadModel("BackedUp\\Cube.obj", "Cube");
-	//manager->addBox(m_pMeshMngr->GetVertexList("Steve"));
+	//BOManager->addBox(m_pMeshMngr->GetVertexList("Steve"));
 	BOManager->addBox(m_pMeshMngr->GetVertexList("Creeper"), "Creeper");
 	BOManager->addBox(m_pMeshMngr->GetVertexList("Plane"), "Plane");
 	BOManager->addBox(m_pMeshMngr->GetVertexList("Cube"), "Cube");
@@ -45,7 +45,7 @@ void AppClass::InitVariables(void)
 		vector3(0.0f, 15.0f, 15.0f),//Camera position
 		vector3(0.0f, 3.0f, 0.0f),//What Im looking at
 		REAXISY);//What is up
-	//Load a model onto the Mesh manager
+	//Load a model onto the Mesh BOManager
 	//m_pMeshMngr->LoadModel("Lego\\Unikitty.bto", "Unikitty");
 }
 
@@ -54,7 +54,7 @@ void AppClass::Update(void)
 	//Update the system's time
 	m_pSystem->UpdateTime();
 
-	//Update the mesh manager's time without updating for collision detection
+	//Update the mesh BOManager's time without updating for collision detection
 	m_pMeshMngr->Update();
 
 	//First person camera movement
@@ -115,20 +115,20 @@ void AppClass::Display(void)
 	//m_pMeshMngr->AddCubeToQueue(cube->position, RERED, SOLID);
 	//m_pMeshMngr->AddCubeToRenderList(cube->position, RERED, SOLID);
 
-	manager->checkCollisions();
+	BOManager->checkCollisions();
 
 	//for each BO
-	for (uint i = 0; i < manager->boundingObjects.size(); i++)
+	for (uint i = 0; i < BOManager->boundingObjects.size(); i++)
 	{
-		if (manager->boundingObjects[i]->IsVisible())
+		if (BOManager->boundingObjects[i]->IsVisible())
 		{
 			MeshClass* temp = new MeshClass();
 
 			//handle mesh here? Should it be a mesh?...
 
-			vector3 tMax = manager->boundingObjects[i]->GetMax();
-			vector3 tMin = manager->boundingObjects[i]->GetMin();
-			vector3 tMid = manager->boundingObjects[i]->GetCentroid();
+			vector3 tMax = BOManager->boundingObjects[i]->GetMax();
+			vector3 tMin = BOManager->boundingObjects[i]->GetMin();
+			vector3 tMid = BOManager->boundingObjects[i]->GetCentroid();
 
 			temp->AddVertexPosition(vector3(tMin.x, tMin.y, tMin.z));
 			temp->AddVertexPosition(vector3(tMin.x, tMin.y, tMax.z));
