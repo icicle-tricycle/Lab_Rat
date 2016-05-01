@@ -20,6 +20,16 @@ void GameObjectManager::ReleaseInstance()
 	}
 }
 
+void GameObjectManager::AddGameObject(String i_name)
+{
+	GameObject* temp = new GameObject(i_name);
+}
+
+void GameObjectManager::AddGameObject(String i_name, vector3 i_pos, float i_mass)
+{
+	GameObject* temp = new GameObject(i_name, i_pos, i_mass);
+}
+
 GameObjectManager::GameObjectManager()
 {
 	gameObjects = std::vector<GameObject>();

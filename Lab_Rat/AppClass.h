@@ -7,7 +7,7 @@ Date: 2015/09 (Last Modified on: 15/11)
 
 #include "RE\ReEngAppClass.h"
 #include <SFML\Graphics.hpp>
-#include "GameObject.h"
+#include "GameObjectManager.h"
 #include "BoundingObjectManager.h"
 
 
@@ -17,7 +17,9 @@ class AppClass : public ReEngAppClass
 {
 	GameObject* cube = nullptr;
 	GameObject* steve = nullptr;
-	BoundingObjectManager* manager = nullptr;
+	BoundingObjectManager* BOManager = nullptr;
+	GameObjectManager* GOManager = nullptr;
+
 public:
 	typedef ReEngAppClass super;
 

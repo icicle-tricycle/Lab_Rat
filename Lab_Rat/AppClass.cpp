@@ -12,16 +12,19 @@ void AppClass::InitWindow(String a_sWindowName)
 
 void AppClass::InitVariables(void)
 {
-	//cube = new GameObject(IDENTITY_M4, vector3(0), vector3(0));
-	manager = BoundingObjectManager::GetInstance();
+	cube = new GameObject("cube", vector3(0.0f), vector3(0.0f), vector3(0.0f),1.0f);
+
+	BOManager = BoundingObjectManager::GetInstance();
+	GOManager = GameObjectManager::GetInstance();
+
 	//m_pMeshMngr->LoadModel("Minecraft\\Steve.obj", "Steve");
 	m_pMeshMngr->LoadModel("Minecraft\\Creeper.obj", "Creeper");
 	m_pMeshMngr->LoadModel("Sorted\\Plane.obj", "Plane");
 	m_pMeshMngr->LoadModel("BackedUp\\Cube.obj", "Cube");
 	//manager->addBox(m_pMeshMngr->GetVertexList("Steve"));
-	manager->addBox(m_pMeshMngr->GetVertexList("Creeper"), "Creeper");
-	manager->addBox(m_pMeshMngr->GetVertexList("Plane"), "Plane");
-	manager->addBox(m_pMeshMngr->GetVertexList("Cube"), "Cube");
+	BOManager->addBox(m_pMeshMngr->GetVertexList("Creeper"), "Creeper");
+	BOManager->addBox(m_pMeshMngr->GetVertexList("Plane"), "Plane");
+	BOManager->addBox(m_pMeshMngr->GetVertexList("Cube"), "Cube");
 
 	m_pMeshMngr->SetModelMatrix(glm::translate(vector3(-5.0f, 2.0f, 0.0f)), "Creeper");
 	m_pMeshMngr->SetModelMatrix(glm::translate(vector3(2.0f, 2.0f, 0.0f)), "Plane");
@@ -33,8 +36,8 @@ void AppClass::InitVariables(void)
 		"Cube"
 		);
 
-	manager->addBox(m_pMeshMngr->GetVertexList("Steve"), "Steve");
-	manager->addBox(m_pMeshMngr->GetVertexList("Creeper"), "Creeper");
+	BOManager->addBox(m_pMeshMngr->GetVertexList("Steve"), "Steve");
+	BOManager->addBox(m_pMeshMngr->GetVertexList("Creeper"), "Creeper");
 	//Reset the selection to -1, -1
 	m_selection = std::pair<int, int>(-1, -1);
 	//Set the camera position
@@ -67,7 +70,10 @@ void AppClass::Update(void)
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
 
-	manager->reAlign();
+	BOManager->reAlign();
+
+
+	BOManager->checkCollisions();
 
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();

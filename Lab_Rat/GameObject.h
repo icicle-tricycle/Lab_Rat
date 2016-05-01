@@ -25,8 +25,13 @@ public:
 	BoundingObjectManager* colliderMngr;
 	MeshManagerSingleton* meshMngr;
 
-	//Rule of 3
+	//Name. Pos, Vel, Force, and Mass assumed 0.
+	GameObject(String name);
+	//Name, pos, mass. Force and Vel of 0
+	GameObject(String name, vector3 pos, float objMass);
+	//Name, Pos, Vel, Force, Mass
 	GameObject(String name, vector3 pos, vector3 vel, vector3 f, float objMass);
+
 	GameObject(GameObject const& other);
 	GameObject& operator=(GameObject const& other);
 	~GameObject();

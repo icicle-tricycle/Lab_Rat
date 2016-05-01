@@ -19,7 +19,25 @@ void GameObject::Init()
 	meshMngr = MeshManagerSingleton::GetInstance();
 }
 
-GameObject::GameObject(String name, vector3 pos, vector3 vel, vector3 f, float objMass) 
+GameObject::GameObject(String name)
+{
+	Init();
+	meshName = name;
+	std::vector<vector3> list = meshMngr->GetVertexList(meshName);
+	colliderMngr->addBox(list, meshName);
+}
+
+GameObject::GameObject(String name, vector3 pos, float objMass)
+{
+	Init();
+	position = pos;
+	meshName = name;
+	mass = objMass;
+	std::vector<vector3> list = meshMngr->GetVertexList(meshName);
+	colliderMngr->addBox(list, meshName);
+}
+
+GameObject::GameObject(String name, vector3 pos, vector3 vel, vector3 f, float objMass)
 {
 	Init();
 	position = pos;
