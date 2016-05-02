@@ -26,12 +26,79 @@ void AppClass::ProcessKeyboard(void)
 #pragma region Camera Positioning
 	if(bModifier)
 		fSpeed *= 10.0f;
+	//PLAYER CONTROLS
+	float fDelta = 0.1f;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	{
+		vector3 v3Velocity = player->GetVelocity();
+		if (!player->IsColliding(wallBack))
+		{
+			v3Velocity.z = -.1;
+		}
+		else
+		{
+			v3Velocity.z = 0;
+		}
+		player->SetVelocity(v3Velocity);
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	{
+		vector3 v3Velocity = player->GetVelocity();
+		if (!player->IsColliding(wallFront))
+		{
+			v3Velocity.z = .1;
+		}
+		else
+		{
+			v3Velocity.z = 0;
+		}
+		player->SetVelocity(v3Velocity);
+	}
+	else
+	{
+		vector3 v3Velocity = player->GetVelocity();
+		v3Velocity.z = 0;
+		player->SetVelocity(v3Velocity);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	{
+		vector3 v3Velocity = player->GetVelocity();
+		if (!player->IsColliding(wallRight))
+		{
+			v3Velocity.x = .1;
+		}
+		else
+		{
+			v3Velocity.x = 0;
+		}
+		player->SetVelocity(v3Velocity);
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	{
+		vector3 v3Velocity = player->GetVelocity();
+		if (!player->IsColliding(wallLeft))
+		{
+			v3Velocity.x = -.1;
+		}
+		else
+		{
+			v3Velocity.x = 0;
+		}
+		player->SetVelocity(v3Velocity);
+	}
+	else
+	{
+		vector3 v3Velocity = player->GetVelocity();
+		v3Velocity.x = 0;
+		player->SetVelocity(v3Velocity);
+	}
 
+	//CAMERA CONTROLS
 	InputManager::GetInstance()->updateInputs(
-		sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W),
-		sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D),
-		sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S),
-		sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A),
+		sf::Keyboard::isKeyPressed(sf::Keyboard::E),
+		sf::Keyboard::isKeyPressed(sf::Keyboard::D),
+		sf::Keyboard::isKeyPressed(sf::Keyboard::Q),
+		sf::Keyboard::isKeyPressed(sf::Keyboard::A),
 		sf::Keyboard::isKeyPressed(sf::Keyboard::Space)
 		);
 
@@ -48,10 +115,10 @@ void AppClass::ProcessKeyboard(void)
 	if (InputManager::GetInstance()->Right())
 		m_pCameraMngr->MoveSideways(fSpeed);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		m_pCameraMngr->MoveForward(-fSpeed);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		m_pCameraMngr->MoveForward(fSpeed);
 
 #pragma endregion

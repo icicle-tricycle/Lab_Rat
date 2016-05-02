@@ -1,94 +1,71 @@
 #include "GameObject.h"
 
-void GameObject::Init()
+void GameObject::Init(String a_sMeshName)
 {
-	gravityAffected = true;
-
-	position = ZERO_V3;
-	prevPosition = ZERO_V3;
-	velocity = ZERO_V3;
-	force = ZERO_V3;
-
-	friction = 0.0f;
-	mass = 1.0f;
-	maxVelocity = 1.0f;
-
-	meshName = "";
-
-	colliderMngr = BoundingObjectManager::GetInstance();
-	meshMngr = MeshManagerSingleton::GetInstance();
+	m_v3Velocity = vector3(0.0f, 0.0f, 0.0f);
+	m_pMeshMngr = MeshManagerSingleton::GetInstance();
+	m_sMeshName = a_sMeshName;
+	m_uMeshIndex = m_pMeshMngr->IdentifyInstance(m_sMeshName);
+	if (m_uMeshIndex >= 0)
+	{
+		InstanceClass* pInstance = m_pMeshMngr->GetInstanceByName(m_sMeshName);
+		m_pBoundingBox = new MyBoundingObjectClass(pInstance->GetVertexList());
+	}
 }
-
-GameObject::GameObject(String name)
+void GameObject::Swap(GameObject& other)
 {
-	Init();
-	meshName = name;
-	std::vector<vector3> list = meshMngr->GetVertexList(meshName);
-	colliderMngr->addBox(list, meshName);
 }
-
-GameObject::GameObject(String name, vector3 pos, float objMass)
+void GameObject::Release(void)
 {
-	Init();
-	position = pos;
-	meshName = name;
-	mass = objMass;
-	std::vector<vector3> list = meshMngr->GetVertexList(meshName);
-	colliderMngr->addBox(list, meshName);
+	SafeDelete(m_pBoundingBox);
 }
-
-GameObject::GameObject(String name, vector3 pos, vector3 vel, vector3 f, float objMass)
+void GameObject::AddToRenderList(bool a_bAddBox)
 {
-	Init();
-	position = pos;
-	velocity = vel;
-	force = f;
-	meshName = name;
-	mass = objMass;
-	std::vector<vector3> list = meshMngr->GetVertexList(meshName);
-	colliderMngr->addBox(list, meshName);
+	if (a_bAddBox)
+	{
+		if (m_pBoundingBox)
+			m_pBoundingBox->AddToRenderList();
+		m_pMeshMngr->AddInstanceToRenderList(m_sMeshName);
+	}
 }
-GameObject::GameObject(GameObject const & other) { }
-GameObject & GameObject::operator=(GameObject const & other) { return *this; }
-GameObject::~GameObject() { }
-
-void GameObject::Update(float deltaTime)
+//The big 3
+GameObject::GameObject(String a_sMeshName)
 {
-	prevPosition = position;
-
-	float fFriction = MapValue(friction, 0.0f, 1.0f, 1.0f, 0.0f);
-	force = force * fFriction;
-
-	ApplyGravity(deltaTime);
-
-	vector3 vel = force * deltaTime;
-	vel = glm::clamp(velocity, -maxVelocity, maxVelocity);
-	position += vel;
-	
-	matrix4 m4ToWorld = glm::translate(position);
-
-	meshMngr->SetModelMatrix(m4ToWorld, meshName);
-	colliderMngr->SetModelMatrix(m4ToWorld, meshName); // Needs to be implemented in the manager
+	Init(a_sMeshName);
 }
-
-void GameObject::Display()
+GameObject::GameObject(GameObject const& other)
 {
-	meshMngr->AddInstanceToRenderList(meshName);
 }
-
-void GameObject::ApplyForce(vector3 v3_force)
+GameObject& GameObject::operator=(GameObject const& other)
 {
-	force += v3_force / mass;
+	if (this != &other)
+	{
+		Release();
+		Init(other.m_sMeshName);
+		GameObject temp(other);
+		Swap(temp);
+	}
+	return *this;
 }
-
-void GameObject::ApplyGravity(float deltaTime)
+GameObject::~GameObject(void) { Release(); };
+//Accessors
+void GameObject::SetModelMatrix(matrix4 a_m4ToWorld)
 {
-	if (gravityAffected)
-		force += vector3(0.0f, -9.81f, 0.0f) * deltaTime;
+	m_m4ToWorld = a_m4ToWorld;
+	m_pBoundingBox->SetModelMatrix(m_m4ToWorld);
+	m_pMeshMngr->SetModelMatrix(m_m4ToWorld, m_sMeshName);
 }
-
-void GameObject::Release()
+matrix4 GameObject::GetModelMatrix(void) { return m_m4ToWorld; }
+void GameObject::SetVelocity(vector3 a_v3Velocity) { m_v3Velocity = a_v3Velocity; }
+vector3 GameObject::GetVelocity(void) { return m_v3Velocity; };
+//--- Non Standard Singleton Methods
+void GameObject::Update(void)
 {
-	
+	m_m4ToWorld = m_m4ToWorld * glm::translate(m_v3Velocity);
+	SetModelMatrix(m_m4ToWorld);
+}
+bool GameObject::IsColliding(GameObject * a_pOther)
+{
+	return m_pBoundingBox->IsColliding(a_pOther->m_pBoundingBox);
 }
 

@@ -15,6 +15,13 @@ using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
 class AppClass : public ReEngAppClass
 {
+	GameObject* player = nullptr;
+	GameObject* floor = nullptr;
+	GameObject* wallFront = nullptr;
+	GameObject* wallBack = nullptr;
+	GameObject* wallLeft = nullptr;
+	GameObject* wallRight = nullptr;
+
 	GameObject* cube = nullptr;
 	GameObject* steve = nullptr;
 	BoundingObjectManager* BOManager = nullptr;
