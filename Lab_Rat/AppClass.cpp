@@ -12,14 +12,16 @@ void AppClass::InitWindow(String a_sWindowName)
 
 void AppClass::InitVariables(void)
 {
+	fDuration = 10.0f;
+
 	//cube = new GameObject("cube", vector3(0.0f), vector3(0.0f), vector3(0.0f),1.0f);
 
 	//BOManager = BoundingObjectManager::GetInstance();
 	//GOManager = GameObjectManager::GetInstance();
 
 	m_pMeshMngr->LoadModel("Minecraft\\Steve.obj", "Steve");
-	/*m_pMeshMngr->LoadModel("Minecraft\\Creeper.obj", "Creeper");
-	m_pMeshMngr->LoadModel("Sorted\\Plane.obj", "Plane");
+	m_pMeshMngr->LoadModel("Minecraft\\Creeper.obj", "Creeper");
+	/*m_pMeshMngr->LoadModel("Sorted\\Plane.obj", "Plane");
 	m_pMeshMngr->LoadModel("BackedUp\\Cube.obj", "Cube");*/
 	m_pMeshMngr->InstanceCuboid(vector3(30, 1, 20), REBLACK, "Floor");
 	m_pMeshMngr->InstanceCuboid(vector3(30, 10, 1), REWHITE, "WallBack");
@@ -33,6 +35,8 @@ void AppClass::InitVariables(void)
 
 	//create game objects from loaded models
 	player = new GameObject("Steve");
+	rat = new GameObject("Creeper");
+
 	floor = new GameObject("Floor");
 	wallBack = new GameObject("WallBack");
 	wallFront = new GameObject("WallFront");
@@ -41,8 +45,10 @@ void AppClass::InitVariables(void)
 
 
 	//set object properties
-	player->SetModelMatrix(glm::translate(vector3(0, 5, 0)));
+	player->SetModelMatrix(glm::translate(vector3(0, 5, 5)));
 	player->SetVelocity(vector3(0, -.1, 0));
+
+	rat->SetModelMatrix(glm::translate(vector3(-10, 0, -5)));
 
 	floor->SetModelMatrix(glm::translate(vector3(0, 0, 0)));
 	wallBack->SetModelMatrix(glm::translate(vector3(0, 0, -10)));
@@ -102,9 +108,30 @@ void AppClass::Update(void)
 		player->SetVelocity(v3Velocity);
 	}
 
+	//RAT LERPING
+	//Lets us know how much time has passed since the last call
+	double fTimeSpan = m_pSystem->LapClock();
+
+	//cumulative time
+	static double fRunTime = 0.0f;
+	fRunTime += fTimeSpan;
+
+	if (fRunTime < fDuration)
+	{
+		float fPercent = MapValue(static_cast<float>(fRunTime), 0.0f, fDuration, 0.0f, 1.0f);
+		vector3 v3Position = glm::lerp(vector3(-10, 0, -5), vector3(10, 0, -5), fPercent);
+		rat->SetModelMatrix(glm::translate(v3Position));
+	}
+
 	//add game objects to render list
 	player->AddToRenderList(true);
+	rat->AddToRenderList(true);
 	floor->AddToRenderList(true);
+	wallBack->AddToRenderList(true);
+	wallFront->AddToRenderList(true);
+	wallLeft->AddToRenderList(true);
+	wallRight->AddToRenderList(true);
+
 	
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
@@ -193,6 +220,7 @@ void AppClass::Display(void)
 void AppClass::Release(void)
 {
 	SafeDelete(player);
+	SafeDelete(rat);
 	SafeDelete(floor);
 	SafeDelete(wallBack);
 	SafeDelete(wallFront);

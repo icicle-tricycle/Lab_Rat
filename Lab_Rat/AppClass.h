@@ -16,6 +16,8 @@ using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 class AppClass : public ReEngAppClass
 {
 	GameObject* player = nullptr;
+	GameObject* rat = nullptr;
+
 	GameObject* floor = nullptr;
 	GameObject* wallFront = nullptr;
 	GameObject* wallBack = nullptr;
@@ -26,6 +28,8 @@ class AppClass : public ReEngAppClass
 	GameObject* steve = nullptr;
 	BoundingObjectManager* BOManager = nullptr;
 	GameObjectManager* GOManager = nullptr;
+
+	float fDuration = 1.0f; //Time Duration of the stops
 
 public:
 	typedef ReEngAppClass super;
