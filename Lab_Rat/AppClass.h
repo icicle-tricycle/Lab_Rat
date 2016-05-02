@@ -17,6 +17,9 @@ class AppClass : public ReEngAppClass
 {
 	GameObject* player = nullptr;
 	GameObject* rat = nullptr;
+	uint numTraps = 10;
+
+	std::vector<GameObject*> traps;
 
 	GameObject* floor = nullptr;
 	GameObject* wallFront = nullptr;

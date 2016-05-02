@@ -13,6 +13,7 @@ void AppClass::InitWindow(String a_sWindowName)
 void AppClass::InitVariables(void)
 {
 	fDuration = 10.0f;
+	numTraps = 10;
 
 	//cube = new GameObject("cube", vector3(0.0f), vector3(0.0f), vector3(0.0f),1.0f);
 
@@ -28,6 +29,7 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->InstanceCuboid(vector3(30, 10, 1), REWHITE, "WallFront");
 	m_pMeshMngr->InstanceCuboid(vector3(1, 10, 20), REWHITE, "WallLeft");
 	m_pMeshMngr->InstanceCuboid(vector3(1, 10, 20), REWHITE, "WallRight");
+	m_pMeshMngr->InstanceCuboid(vector3(1, 1, 1), REBLUE, "Trap");
 	/*BOManager->addBox(m_pMeshMngr->GetVertexList("Steve"));
 	BOManager->addBox(m_pMeshMngr->GetVertexList("Creeper"), "Creeper");
 	BOManager->addBox(m_pMeshMngr->GetVertexList("Plane"), "Plane");
@@ -42,6 +44,12 @@ void AppClass::InitVariables(void)
 	wallFront = new GameObject("WallFront");
 	wallLeft = new GameObject("WallLeft");
 	wallRight = new GameObject("WallRight");
+	
+	for (uint i = 0; i < numTraps; i++)
+	{
+		GameObject* trap = new GameObject("Trap");
+		traps.push_back(trap);
+	}
 
 
 	//set object properties
@@ -56,7 +64,10 @@ void AppClass::InitVariables(void)
 	wallLeft->SetModelMatrix(glm::translate(vector3(-15, 0, 0)));
 	wallRight->SetModelMatrix(glm::translate(vector3(15, 0, 0)));
 
-
+	for (uint i = 0; i < numTraps; i++)
+	{
+		traps[i]->SetModelMatrix(glm::translate(vector3(-10+i*2,.1,-5)));
+	}
 
 	//What is this?
 	/*m_pMeshMngr->SetModelMatrix(glm::translate(vector3(-5.0f, 2.0f, 0.0f)), "Creeper");
@@ -131,6 +142,10 @@ void AppClass::Update(void)
 	wallFront->AddToRenderList(true);
 	wallLeft->AddToRenderList(true);
 	wallRight->AddToRenderList(true);
+	for (uint i = 0; i < numTraps; i++)
+	{
+		traps[i]->AddToRenderList(true);
+	}
 
 	
 	//Adds all loaded instance to the render list
@@ -226,6 +241,11 @@ void AppClass::Release(void)
 	SafeDelete(wallFront);
 	SafeDelete(wallLeft);
 	SafeDelete(wallRight);
+
+	for (uint i = 0; i < numTraps; i++)
+	{
+		SafeDelete(traps[i]);
+	}
 
 	SafeDelete(cube);
 	super::Release(); //release the memory of the inherited fields
