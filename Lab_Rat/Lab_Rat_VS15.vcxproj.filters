@@ -19,6 +19,9 @@
     <ClCompile Include="MyBoundingObjectClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Trap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppClass.h">
@@ -37,6 +40,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameObjectManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Trap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

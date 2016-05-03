@@ -30,10 +30,6 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->InstanceCuboid(vector3(1, 10, 20), REWHITE, "WallLeft");
 	m_pMeshMngr->InstanceCuboid(vector3(1, 10, 20), REWHITE, "WallRight");
 	m_pMeshMngr->InstanceCuboid(vector3(1, 1, 1), REBLUE, "Trap");
-	/*BOManager->addBox(m_pMeshMngr->GetVertexList("Steve"));
-	BOManager->addBox(m_pMeshMngr->GetVertexList("Creeper"), "Creeper");
-	BOManager->addBox(m_pMeshMngr->GetVertexList("Plane"), "Plane");
-	BOManager->addBox(m_pMeshMngr->GetVertexList("Cube"), "Cube");*/
 
 	//create game objects from loaded models
 	player = new GameObject("Steve");
@@ -69,19 +65,6 @@ void AppClass::InitVariables(void)
 		traps[i]->SetModelMatrix(glm::translate(vector3(-10+i*2,.1,-5)));
 	}
 
-	//What is this?
-	/*m_pMeshMngr->SetModelMatrix(glm::translate(vector3(-5.0f, 2.0f, 0.0f)), "Creeper");
-	m_pMeshMngr->SetModelMatrix(glm::translate(vector3(2.0f, 2.0f, 0.0f)), "Plane");
-
-	m_pMeshMngr->SetModelMatrix(
-		glm::translate(
-			glm::scale(vector3(3.0f, 0.0f, 3.0f)),
-			vector3(0.0f, 0.0f, 0.0f)),
-		"Cube"
-		);
-
-	/*BOManager->addBox(m_pMeshMngr->GetVertexList("Steve"), "Steve");
-	BOManager->addBox(m_pMeshMngr->GetVertexList("Creeper"), "Creeper");*/
 	//Reset the selection to -1, -1
 	m_selection = std::pair<int, int>(-1, -1);
 	//Set the camera position
@@ -130,7 +113,7 @@ void AppClass::Update(void)
 	if (fRunTime < fDuration)
 	{
 		float fPercent = MapValue(static_cast<float>(fRunTime), 0.0f, fDuration, 0.0f, 1.0f);
-		vector3 v3Position = glm::lerp(vector3(-10, 0, -5), vector3(10, 0, -5), fPercent);
+		vector3 v3Position = glm::lerp(vector3(-12, 0, -5), vector3(12, 0, -5), fPercent);
 		rat->SetModelMatrix(glm::translate(v3Position));
 	}
 
@@ -146,7 +129,6 @@ void AppClass::Update(void)
 	{
 		traps[i]->AddToRenderList(true);
 	}
-
 	
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
@@ -195,7 +177,6 @@ void AppClass::Display(void)
 	
 	//m_pMeshMngr->AddCubeToQueue(cube->position, RERED, SOLID);
 	//m_pMeshMngr->AddCubeToRenderList(cube->position, RERED, SOLID);
-
 	//BOManager->checkCollisions();
 
 	//for each BO
