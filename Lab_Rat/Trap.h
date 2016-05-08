@@ -18,7 +18,7 @@ public:
 
 	void Swap(Trap& other);
 
-	bool SetEnabled(bool setTo);
+	void SetEnabled(bool setTo);
 	bool GetEnabled();
 private:
 };

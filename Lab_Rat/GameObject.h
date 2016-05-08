@@ -8,6 +8,7 @@
 
 class GameObject
 {
+protected:
 	uint m_uMeshIndex = 0; //Index of the object in the mesh manager
 	String m_sMeshName = ""; //Index of the object in the mesh manager
 	MyBoundingObjectClass* m_pBoundingBox = nullptr; //Bounding Box of the object
@@ -109,7 +110,7 @@ public:
 	*/
 	bool IsColliding(GameObject* a_pOther);
 
-private:
+protected:
 	/*
 	Method: Release
 	Usage: Deallocates member fields
