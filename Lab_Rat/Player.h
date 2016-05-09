@@ -19,5 +19,8 @@ public:
 
 	//I suppose I should redo this as with passing pointer to a vector instead of passing a vector
 	void SetWalls(std::vector<GameObject*> i_wall);
+
+private:
+	bool jumped;
 };
 

@@ -6,6 +6,7 @@ Player::Player(String m_sMeshName) : GameObject(m_sMeshName)
 {
 	GameObject::Init(m_sMeshName);
 	walls = std::vector<GameObject*>();
+	jumped = false;
 }
 
 
@@ -21,10 +22,16 @@ void Player::Update()
 }
 void Player::Update(bool up, bool right, bool down, bool left, bool interact)
 {
+	if (interact && !jumped)
+	{
+		m_v3Velocity.y = 0.75f;
+		jumped = true;
+	}
+
 	//change velocity based on input
 	m_v3Velocity = vector3(
 		0.1f*(float)(right - left),
-		0.1f*(0.0f),
+		m_v3Velocity.y * 0.8f,
 		0.1f*(float)(down - up)
 		);
 
@@ -52,6 +59,7 @@ void Player::Update(bool up, bool right, bool down, bool left, bool interact)
 	{
 		if (IsColliding(walls.at(i)))
 		{
+			jumped = false;
 			//move back
 			m_v3Velocity = vector3(
 				-m_v3Velocity.x,
