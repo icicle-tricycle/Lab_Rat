@@ -2,6 +2,7 @@
 
 Trap::Trap(String m_sMeshName) : GameObject(m_sMeshName)
 {
+	GameObject::Init(m_sMeshName);
 	b_isEnabled = true;
 }
 

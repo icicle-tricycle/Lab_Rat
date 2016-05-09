@@ -9,23 +9,26 @@ Date: 2015/09 (Last Modified on: 15/11)
 #include <SFML\Graphics.hpp>
 #include "GameObjectManager.h"
 #include "BoundingObjectManager.h"
+#include "Trap.h"
+#include "Player.h"
 
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
 class AppClass : public ReEngAppClass
 {
-	GameObject* player = nullptr;
+	Player* player = nullptr;
 	GameObject* rat = nullptr;
 	uint numTraps = 10;
 
-	std::vector<GameObject*> traps;
+	std::vector<Trap*> traps;
 
 	GameObject* floor = nullptr;
 	GameObject* wallFront = nullptr;
 	GameObject* wallBack = nullptr;
 	GameObject* wallLeft = nullptr;
 	GameObject* wallRight = nullptr;
+	GameObject* wallCenter = nullptr;
 
 	GameObject* cube = nullptr;
 	GameObject* steve = nullptr;

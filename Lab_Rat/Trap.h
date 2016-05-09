@@ -2,7 +2,7 @@
 
 #include "GameObject.h"
 
-class Trap : GameObject
+class Trap : public GameObject
 {
 	bool b_isEnabled;
 

@@ -29,10 +29,11 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->InstanceCuboid(vector3(30, 10, 1), REWHITE, "WallFront");
 	m_pMeshMngr->InstanceCuboid(vector3(1, 10, 20), REWHITE, "WallLeft");
 	m_pMeshMngr->InstanceCuboid(vector3(1, 10, 20), REWHITE, "WallRight");
-	m_pMeshMngr->InstanceCuboid(vector3(1, 1, 1), REBLUE, "Trap");
+	m_pMeshMngr->InstanceCuboid(vector3(30, 5, 0.25f), vector3(0.3f, 0.45f, 0.6f), "WallCenter");
+	m_pMeshMngr->InstanceCuboid(vector3(1, 1, 1), vector3(0.8f,0.20f,0.4f), "Trap");
 
 	//create game objects from loaded models
-	player = new GameObject("Steve");
+	player = new Player("Steve");
 	rat = new GameObject("Creeper");
 
 	floor = new GameObject("Floor");
@@ -40,12 +41,22 @@ void AppClass::InitVariables(void)
 	wallFront = new GameObject("WallFront");
 	wallLeft = new GameObject("WallLeft");
 	wallRight = new GameObject("WallRight");
+	wallCenter = new GameObject("WallCenter");
 	
 	for (uint i = 0; i < numTraps; i++)
 	{
-		GameObject* trap = new GameObject("Trap");
+		Trap* trap = new Trap("Trap");
 		traps.push_back(trap);
 	}
+	std::vector<GameObject*> walls;
+	walls.push_back(floor);
+	walls.push_back(wallBack);
+	walls.push_back(wallFront);
+	walls.push_back(wallLeft);
+	walls.push_back(wallRight);
+	walls.push_back(wallCenter);
+
+	player->SetWalls(walls);
 
 
 	//set object properties
@@ -59,6 +70,7 @@ void AppClass::InitVariables(void)
 	wallFront->SetModelMatrix(glm::translate(vector3(0, 0, 10)));
 	wallLeft->SetModelMatrix(glm::translate(vector3(-15, 0, 0)));
 	wallRight->SetModelMatrix(glm::translate(vector3(15, 0, 0)));
+	wallCenter->SetModelMatrix(glm::translate(vector3(0, 0, 0)));
 
 	for (uint i = 0; i < numTraps; i++)
 	{
@@ -95,12 +107,12 @@ void AppClass::Update(void)
 	//m_pMeshMngr->SetModelMatrix(ToMatrix4(m_qArcBall), 0);
 
 	player->Update();
-	if (player->IsColliding(floor))
+	/*if (player->IsColliding(floor))
 	{
 		vector3 v3Velocity = player->GetVelocity();
 		v3Velocity.y = 0;
 		player->SetVelocity(v3Velocity);
-	}
+	}*/
 
 	//RAT LERPING
 	//Lets us know how much time has passed since the last call
@@ -125,6 +137,7 @@ void AppClass::Update(void)
 	wallFront->AddToRenderList(true);
 	wallLeft->AddToRenderList(true);
 	wallRight->AddToRenderList(true);
+	wallCenter->AddToRenderList(true);
 	for (uint i = 0; i < numTraps; i++)
 	{
 		traps[i]->AddToRenderList(true);
@@ -132,11 +145,6 @@ void AppClass::Update(void)
 	
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
-
-	//BOManager->reAlign();
-
-
-	//BOManager->checkCollisions();
 
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();
@@ -175,39 +183,6 @@ void AppClass::Display(void)
 		break;
 	}
 	
-	//m_pMeshMngr->AddCubeToQueue(cube->position, RERED, SOLID);
-	//m_pMeshMngr->AddCubeToRenderList(cube->position, RERED, SOLID);
-	//BOManager->checkCollisions();
-
-	//for each BO
-	/*for (uint i = 0; i < BOManager->boundingObjects.size(); i++)
-	{
-		if (BOManager->boundingObjects[i]->IsVisible())
-		{
-			MeshClass* temp = new MeshClass();
-
-			//handle mesh here? Should it be a mesh?...
-
-			vector3 tMax = BOManager->boundingObjects[i]->GetMax();
-			vector3 tMin = BOManager->boundingObjects[i]->GetMin();
-			vector3 tMid = BOManager->boundingObjects[i]->GetCentroid();
-
-			temp->AddVertexPosition(vector3(tMin.x, tMin.y, tMin.z));
-			temp->AddVertexPosition(vector3(tMin.x, tMin.y, tMax.z));
-			temp->AddVertexPosition(vector3(tMin.x, tMax.y, tMin.z));
-			temp->AddVertexPosition(vector3(tMin.x, tMax.y, tMax.z));
-			temp->AddVertexPosition(vector3(tMax.x, tMin.y, tMin.z));
-			temp->AddVertexPosition(vector3(tMax.x, tMin.y, tMax.z));
-			temp->AddVertexPosition(vector3(tMax.x, tMax.y, tMin.z));
-			temp->AddVertexPosition(vector3(tMax.x, tMax.y, tMax.z));
-
-			matrix4 tempWorldMatrix = IDENTITY_M4;
-			tempWorldMatrix = glm::translate(tMid);
-
-			m_pMeshMngr->AddMeshToRenderList(temp, tempWorldMatrix);
-		}
-	}*/
-	
 	m_pMeshMngr->Render(); //renders the render list
 	m_pMeshMngr->ResetRenderList(); //Reset the Render list after render
 	m_pGLSystem->GLSwapBuffers(); //Swaps the OpenGL buffers
@@ -222,6 +197,7 @@ void AppClass::Release(void)
 	SafeDelete(wallFront);
 	SafeDelete(wallLeft);
 	SafeDelete(wallRight);
+	SafeDelete(wallCenter);
 
 	for (uint i = 0; i < numTraps; i++)
 	{
