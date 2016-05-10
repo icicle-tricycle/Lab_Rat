@@ -21,6 +21,7 @@ class MyOctant
 	
 public:
 	static bool m_bHead;
+	bool displayTree = true;
 	MyOctant* m_pChildren = nullptr;
 	/*
 	Method: MyOctant
