@@ -13,15 +13,18 @@ void AppClass::InitWindow(String a_sWindowName)
 void AppClass::InitVariables(void)
 {
 	fDuration = 10.0f;
-	numTraps = 10;
+	numTraps = 10.0f;
 
 	//cube = new GameObject("cube", vector3(0.0f), vector3(0.0f), vector3(0.0f),1.0f);
 
 	//BOManager = BoundingObjectManager::GetInstance();
 	//GOManager = GameObjectManager::GetInstance();
 
-	m_pMeshMngr->LoadModel("Minecraft\\Steve.obj", "Steve");
-	m_pMeshMngr->LoadModel("Minecraft\\Creeper.obj", "Creeper");
+	//m_pMeshMngr->LoadModel("Minecraft\\Steve.obj", "Steve");
+	m_pMeshMngr->LoadModel("RobotKyle\\Scientist.fbx", "Player");
+	//m_pMeshMngr->LoadModel("Minecraft\\Creeper.obj", "Creeper");
+	m_pMeshMngr->LoadModel("RobotKyle\\RobotKyle.fbx", "Robot");
+
 	/*m_pMeshMngr->LoadModel("Sorted\\Plane.obj", "Plane");
 	m_pMeshMngr->LoadModel("BackedUp\\Cube.obj", "Cube");*/
 	m_pMeshMngr->InstanceCuboid(vector3(30, 1, 20), REBLACK, "Floor");
@@ -33,8 +36,9 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->InstanceCuboid(vector3(1, 1, 1), vector3(0.8f,0.20f,0.4f), "Trap");
 
 	//create game objects from loaded models
-	player = new Player("Steve");
-	rat = new GameObject("Creeper");
+	player = new Player("Player");
+	//rat = new GameObject("Creeper");
+	rat = new GameObject("Robot");
 
 	floor = new GameObject("Floor");
 	wallBack = new GameObject("WallBack");
@@ -60,10 +64,18 @@ void AppClass::InitVariables(void)
 
 
 	//set object properties
-	player->SetModelMatrix(glm::translate(vector3(0, 5, 5)));
+	matrix4 temp;
+	temp = glm::translate(vector3(0, 5, 5));
+	temp = glm::scale(temp,vector3(1.2f, 1.2f, 1.2f));
+	//player->SetModelMatrix(glm::translate(vector3(0, 5, 5)));
+	player->SetModelMatrix(temp);
 	player->SetVelocity(vector3(0, -.1, 0));
 
-	rat->SetModelMatrix(glm::translate(vector3(-10, 0, -5)));
+	//matrix4 temp;
+	temp = glm::translate(vector3(-12, 0.5f, -5));
+	temp = glm::scale(temp, vector3(.02f, .02f, .02f));
+	temp = glm::rotate(temp, 90.0f, 0.0f, 1.0f, 0.0f);
+	rat->SetModelMatrix(temp);
 
 	floor->SetModelMatrix(glm::translate(vector3(0, 0, 0)));
 	wallBack->SetModelMatrix(glm::translate(vector3(0, 0, -10)));
@@ -74,7 +86,7 @@ void AppClass::InitVariables(void)
 
 	for (uint i = 0; i < numTraps; i++)
 	{
-		traps[i]->SetModelMatrix(glm::translate(vector3(-10+i*2,.1,-5)));
+		traps[i]->SetModelMatrix(glm::translate(vector3(-10.0f+i*2.0f,.5,-5)));
 	}
 
 	//Reset the selection to -1, -1
@@ -125,8 +137,13 @@ void AppClass::Update(void)
 	if (fRunTime < fDuration)
 	{
 		float fPercent = MapValue(static_cast<float>(fRunTime), 0.0f, fDuration, 0.0f, 1.0f);
-		vector3 v3Position = glm::lerp(vector3(-12, 0, -5), vector3(12, 0, -5), fPercent);
-		rat->SetModelMatrix(glm::translate(v3Position));
+		vector3 v3Position = glm::lerp(vector3(-12, 0.5f, -5), vector3(12, 0.5f, -5), fPercent);
+		matrix4 temp;
+		temp = glm::translate(v3Position);
+		temp = glm::scale(temp, vector3(.02f, .02f, .02f));
+		temp = glm::rotate(temp, 90.0f, 0.0f, 1.0f, 0.0f);
+		rat->SetModelMatrix(temp);
+
 	}
 
 	//add game objects to render list
