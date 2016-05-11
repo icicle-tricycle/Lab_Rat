@@ -34,7 +34,7 @@ void AppClass::InitVariables(void)
 
 	//create game objects from loaded models
 	player = new Player("Steve");
-	rat = new GameObject("Creeper");
+	rat = new Rat("Creeper");
 
 	floor = new GameObject("Floor");
 	wallBack = new GameObject("WallBack");
@@ -107,6 +107,8 @@ void AppClass::Update(void)
 	//m_pMeshMngr->SetModelMatrix(ToMatrix4(m_qArcBall), 0);
 
 	player->Update();
+	rat->Update();
+
 	/*if (player->IsColliding(floor))
 	{
 		vector3 v3Velocity = player->GetVelocity();

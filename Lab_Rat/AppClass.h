@@ -11,6 +11,7 @@ Date: 2015/09 (Last Modified on: 15/11)
 #include "BoundingObjectManager.h"
 #include "Trap.h"
 #include "Player.h"
+#include "Rat.h"
 
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
@@ -18,7 +19,7 @@ using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 class AppClass : public ReEngAppClass
 {
 	Player* player = nullptr;
-	GameObject* rat = nullptr;
+	Rat* rat = nullptr;
 	uint numTraps = 10;
 
 	std::vector<Trap*> traps;
