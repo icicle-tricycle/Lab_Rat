@@ -1,87 +1,22 @@
-#include "Player.h"
+#include "Rat.h"
 
-
-
-Player::Player(String m_sMeshName) : GameObject(m_sMeshName)
+Rat::Rat(String m_sMeshName) :GameObject(m_sMeshName)
 {
 	GameObject::Init(m_sMeshName);
 	walls = std::vector<GameObject*>();
-	jumped = false;
 }
 
-
-Player::~Player()
+Rat::~Rat()
 {
 }
 
-
-void Player::Update()
+void Rat::Update()
 {
-	im = InputManager::GetInstance();
-	Update(im->Up(), im->Right(), im->Down(), im->Left(), im->Interact());
-}
-void Player::Update(bool up, bool right, bool down, bool left, bool interact)
-{
-	if (interact && !jumped)
-	{
-		//m_v3Velocity.y = 0.75f;
-		jumped = true;
-	}
-
-	//change velocity based on input
-	m_v3Velocity = vector3(
-		0.1f*(float)(right - left),
-		m_v3Velocity.y * 0.8f,
-		0.1f*(float)(down - up)
-		);
-
-
 	GameObject::Update();
-	//test collisions
 	WallCollision();
-
-	//hacky floor stuff, since currently wallColision() doesn't allow a player to move parallel to a surface
-
-	//saving correct velocity
-	vector3 tempV = m_v3Velocity;
-	//move back
-	m_v3Velocity = -tempV;
-	GameObject::Update();
-	//fall from the acceptable position
-	m_v3Velocity = vector3(
-		tempV.x,
-		tempV.y -0.05f,
-		tempV.z
-		);
-	GameObject::Update();
-	//if we collide with a wall, don't fall
-	for (uint i = 0; i < walls.size(); i++)
-	{
-		if (IsColliding(walls.at(i)))
-		{
-			jumped = false;
-			//move back
-			m_v3Velocity = vector3(
-				-m_v3Velocity.x,
-				-(m_v3Velocity.y),
-				-m_v3Velocity.z
-				);
-			GameObject::Update();
-			m_v3Velocity = vector3(
-				-m_v3Velocity.x,
-				0.0f,
-				-m_v3Velocity.z
-				);
-			GameObject::Update();
-		}
-	}
-	
-
-	
 }
 
-//Check collisions with objects in our wall collection. Assumes player has moved just before this function call.
-void Player::WallCollision()
+void Rat::WallCollision()
 {
 	for (uint i = 0; i < walls.size(); i++)
 	{
@@ -180,19 +115,27 @@ void Player::WallCollision()
 			}//end z check
 		}//end specific wall check
 	}//end checking all walls
-} //end wallCollision()
+}//end wallCollision()
 
 
-void Player::ButtonCollision()
-{
-
-
-}
-
-
-
-void Player::SetWalls(std::vector<GameObject*> i_wall)
+void Rat::SetWalls(std::vector<GameObject*> i_wall)
 {
 	walls = i_wall;
 }
 
+void Rat::Respawn()
+{
+
+}
+
+void Rat::CheckTraps(std::vector<Trap*>* traps)
+{
+	for (uint i = 0; i < traps->size(); i++)
+	{
+		if (IsColliding(traps->at(i)) && traps->at(i)->GetEnabled())
+		{
+			traps->at(i)->SetEnabled(false);
+			std::cout << "Trap Collision" << std::endl;
+		}
+	}
+}

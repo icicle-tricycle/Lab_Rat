@@ -36,7 +36,7 @@ void AppClass::ProcessKeyboard(void)
 		);
 
 	//Camera Controls
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
 		m_pCameraMngr->MoveForward(fSpeed);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
@@ -52,7 +52,7 @@ void AppClass::ProcessKeyboard(void)
 		m_pCameraMngr->MoveVertical(-fSpeed);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		m_pCameraMngr->MoveVertical(fSpeed);
+		m_pCameraMngr->MoveVertical(fSpeed);*/
 
 #pragma endregion
 
