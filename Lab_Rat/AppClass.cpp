@@ -14,7 +14,7 @@ void AppClass::InitVariables(void)
 {
 	fDuration = 20.0f;
 	countDown = 10.0f;
-	numButtons = 10.0f;
+	numButtons = 3.0f;
 	fDuration = 10.0f;
 	numTraps = 3.0f;
 
@@ -36,8 +36,7 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->InstanceCuboid(vector3(1, 10, 20), REWHITE, "WallLeft");
 	m_pMeshMngr->InstanceCuboid(vector3(1, 10, 20), REWHITE, "WallRight");
 	m_pMeshMngr->InstanceCuboid(vector3(30, 5, 0.25f), vector3(0.3f, 0.45f, 0.6f), "WallCenter");
-	m_pMeshMngr->InstanceCuboid(vector3(1, 1, 1), vector3(0.8f,0.20f,0.4f), "Trap");
-	m_pMeshMngr->InstanceCuboid(vector3(1, 1, 1), REBLUE, "Button");
+	//m_pMeshMngr->InstanceCuboid(vector3(1, 1, 1), vector3(0.8f,0.20f,0.4f), "Trap");
 
 	//create game objects from loaded models
 	rat = new Rat("Robot");
@@ -61,8 +60,10 @@ void AppClass::InitVariables(void)
 
 	for (uint i = 0; i < numButtons; i++)
 	{
-		Trap* button = new Trap("Button");
+		m_pMeshMngr->InstanceCuboid(vector3(1, 1, 1), REBLUE, "Button" + std::to_string(i));
+		Trap* button = new Trap("Button" + std::to_string(i));
 		buttons.push_back(button);
+		buttons[i]->SetModelMatrix(glm::translate(vector3(-7.5f + i*7.5f, .5, 5)));
 	}
 
 	std::vector<GameObject*> walls;
@@ -102,10 +103,10 @@ void AppClass::InitVariables(void)
 		traps[i]->SetModelMatrix(glm::translate(vector3(-10.0f + i*2.0f, .5, -5)));
 	}*/
 
-	for (uint i = 0; i < numButtons; i++)
+	/*for (uint i = 0; i < numButtons; i++)
 	{
 		buttons[i]->SetModelMatrix(glm::translate(vector3(-10.0f + i*2.0f, .5, -5)));
-	}
+	}*/
 
 	//Reset the selection to -1, -1
 	m_selection = std::pair<int, int>(-1, -1);
