@@ -1,11 +1,11 @@
 #include "Rat.h"
 
-Rat::Rat(String m_sMeshName) : GameObject(m_sMeshName)
+Rat::Rat(String m_sMeshName) :GameObject(m_sMeshName)
 {
 	GameObject::Init(m_sMeshName);
 	walls = std::vector<GameObject*>();
 	alive = true;
-	fDyingDuration = 2.0f;
+	fDyingDuration = 3.0f;
 }
 
 Rat::~Rat()
@@ -17,7 +17,7 @@ void Rat::Update(double dTime)
 	GameObject::Update();
 	WallCollision();
 
-	vector3 endPosition = vector3(deathPoint.x, deathPoint.y - 2, deathPoint.z);
+	vector3 endPosition = vector3(deathPoint.x, deathPoint.y - 5, deathPoint.z);
 
 	if (!alive)
 	{
@@ -27,7 +27,11 @@ void Rat::Update(double dTime)
 		{
 			float fPercent = MapValue(static_cast<float>(fRunTime), 0.0f, fDyingDuration, 0.0f, 1.0f);
 			vector3 v3Position = glm::lerp(deathPoint, endPosition, fPercent);
-			SetModelMatrix(glm::translate(v3Position));
+			matrix4 temp;
+			temp = glm::translate(v3Position);
+			temp = glm::scale(temp, vector3(.02f, .02f, .02f));
+			temp = glm::rotate(temp, 90.0f, 0.0f, 1.0f, 0.0f);
+			SetModelMatrix(temp);
 		}
 		else
 		{

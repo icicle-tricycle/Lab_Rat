@@ -21,8 +21,10 @@ class AppClass : public ReEngAppClass
 	Player* player = nullptr;
 	Rat* rat = nullptr;
 	uint numTraps = 10;
+	uint numButtons = 7;
 
 	std::vector<Trap*> traps;
+	std::vector<Trap*> buttons;
 
 	GameObject* floor = nullptr;
 	GameObject* wallFront = nullptr;
@@ -37,6 +39,7 @@ class AppClass : public ReEngAppClass
 	GameObjectManager* GOManager = nullptr;
 
 	float fDuration = 1.0f; //Time Duration of the stops
+	float countDown = 10.0f;
 
 public:
 	typedef ReEngAppClass super;
