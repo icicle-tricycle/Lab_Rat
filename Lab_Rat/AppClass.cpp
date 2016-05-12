@@ -16,6 +16,10 @@ void AppClass::InitVariables(void)
 	countDown = 10.0f;
 	numButtons = 3.0f;
 	numTraps = 3.0f;
+	for (uint i = 0; i < numButtons; i++)
+	{
+		previouslyColliding.push_back(false);
+	}
 
 	//cube = new GameObject("cube", vector3(0.0f), vector3(0.0f), vector3(0.0f),1.0f);
 
@@ -35,7 +39,7 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->InstanceCuboid(vector3(1, 10, 20), REWHITE, "WallLeft");
 	m_pMeshMngr->InstanceCuboid(vector3(1, 10, 20), REWHITE, "WallRight");
 	m_pMeshMngr->InstanceCuboid(vector3(30, 5, 0.25f), vector3(0.3f, 0.45f, 0.6f), "WallCenter");
-	//m_pMeshMngr->InstanceCuboid(vector3(1, 1, 1), vector3(0.8f,0.20f,0.4f), "Trap");
+
 
 	//create game objects from loaded models
 	rat = new Rat("Robot");
@@ -57,12 +61,13 @@ void AppClass::InitVariables(void)
 		traps[i]->SetModelMatrix(glm::translate(vector3(-7.5f + i*7.5f, .5, -5)));
 	}
 
+	Trap* button = nullptr;
 	for (uint i = 0; i < numButtons; i++)
 	{
 		m_pMeshMngr->InstanceCuboid(vector3(1, 1, 1), REBLUE, "Button" + std::to_string(i));
-		Trap* button = new Trap("Button" + std::to_string(i));
+		button = new Trap("Button" + std::to_string(i));
 		buttons.push_back(button);
-		buttons[i]->SetModelMatrix(glm::translate(vector3(-7.5f + i*7.5f, .5, 5)));
+		buttons[i]->SetModelMatrix(glm::translate(vector3(-7.5 + i*7.5f, .5, 5)));
 	}
 
 	std::vector<GameObject*> walls;
@@ -171,6 +176,22 @@ void AppClass::Update(void)
 		rat->SetModelMatrix(temp);
 
 	}
+
+	//BUTTON CONFIGURATION
+	for (uint i = 0; i < numButtons; i++)
+	{
+		if (player->IsColliding(buttons[i]) && !previouslyColliding[i])
+		{
+			traps[i]->SetEnabled(!traps[i]->GetEnabled());
+			previouslyColliding[i] = true;
+		}
+		else if (!player->IsColliding(buttons[i]))
+		{
+			previouslyColliding[i] = false;
+		}
+	}
+
+
 	//add game objects to render list
 	player->AddToRenderList(true);
 	rat->AddToRenderList(true);
@@ -180,9 +201,13 @@ void AppClass::Update(void)
 	wallLeft->AddToRenderList(true);
 	wallRight->AddToRenderList(true);
 	wallCenter->AddToRenderList(true);
+
 	for (uint i = 0; i < numTraps; i++)
 	{
-		traps[i]->AddToRenderList(true);
+		if (traps[i]->GetEnabled())
+		{
+			traps[i]->AddToRenderList(true);
+		}
 	}
 
 	for (uint i = 0; i < numButtons; i++)

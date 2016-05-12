@@ -23,6 +23,8 @@ class AppClass : public ReEngAppClass
 	uint numTraps = 10;
 	uint numButtons = 7;
 
+	std::vector<bool> previouslyColliding;
+
 	std::vector<Trap*> traps;
 	std::vector<Trap*> buttons;
 
