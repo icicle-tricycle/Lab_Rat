@@ -12,8 +12,10 @@ void AppClass::InitWindow(String a_sWindowName)
 
 void AppClass::InitVariables(void)
 {
-	fDuration = 10.0f;
+	fDuration = 20.0f;
 	numTraps = 10.0f;
+	countDown = 10.0f;
+	numButtons = 10.0f;
 
 	//cube = new GameObject("cube", vector3(0.0f), vector3(0.0f), vector3(0.0f),1.0f);
 
@@ -34,6 +36,7 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->InstanceCuboid(vector3(1, 10, 20), REWHITE, "WallRight");
 	m_pMeshMngr->InstanceCuboid(vector3(30, 5, 0.25f), vector3(0.3f, 0.45f, 0.6f), "WallCenter");
 	m_pMeshMngr->InstanceCuboid(vector3(1, 1, 1), vector3(0.8f,0.20f,0.4f), "Trap");
+	m_pMeshMngr->InstanceCuboid(vector3(1, 1, 1), REBLUE, "Button");
 
 	//create game objects from loaded models
 	player = new Player("Player");
@@ -52,6 +55,13 @@ void AppClass::InitVariables(void)
 		Trap* trap = new Trap("Trap");
 		traps.push_back(trap);
 	}
+
+	for (uint i = 0; i < numButtons; i++)
+	{
+		Trap* button = new Trap("Button");
+		buttons.push_back(button);
+	}
+
 	std::vector<GameObject*> walls;
 	walls.push_back(floor);
 	walls.push_back(wallBack);
@@ -87,6 +97,11 @@ void AppClass::InitVariables(void)
 	for (uint i = 0; i < numTraps; i++)
 	{
 		traps[i]->SetModelMatrix(glm::translate(vector3(-10.0f+i*2.0f,.5,-5)));
+	}
+
+	for (uint i = 0; i < numButtons; i++)
+	{
+		buttons[i]->SetModelMatrix(glm::translate(vector3(-10.0f + i*2.0f, .5, -5)));
 	}
 
 	//Reset the selection to -1, -1
@@ -133,10 +148,16 @@ void AppClass::Update(void)
 	//cumulative time
 	static double fRunTime = 0.0f;
 	fRunTime += fTimeSpan;
-
-	if (fRunTime < fDuration)
+	
+	countDown -= fTimeSpan;
+	if (countDown <= 0)
 	{
-		float fPercent = MapValue(static_cast<float>(fRunTime), 0.0f, fDuration, 0.0f, 1.0f);
+		countDown = 0;
+	}
+
+	if (fRunTime < fDuration && fRunTime > 10)
+	{
+		float fPercent = MapValue(static_cast<float>(fRunTime), 10.0f, fDuration, 0.0f, 1.0f);
 		vector3 v3Position = glm::lerp(vector3(-12, 0.5f, -5), vector3(12, 0.5f, -5), fPercent);
 		matrix4 temp;
 		temp = glm::translate(v3Position);
@@ -145,7 +166,6 @@ void AppClass::Update(void)
 		rat->SetModelMatrix(temp);
 
 	}
-
 	//add game objects to render list
 	player->AddToRenderList(true);
 	rat->AddToRenderList(true);
@@ -158,6 +178,11 @@ void AppClass::Update(void)
 	for (uint i = 0; i < numTraps; i++)
 	{
 		traps[i]->AddToRenderList(true);
+	}
+
+	for (uint i = 0; i < numButtons; i++)
+	{
+		buttons[i]->AddToRenderList(true);
 	}
 	
 	//Adds all loaded instance to the render list
@@ -174,7 +199,9 @@ void AppClass::Update(void)
 	m_pMeshMngr->PrintLine(m_pMeshMngr->GetInstanceGroupName(m_selection.first, m_selection.second), REYELLOW);
 	
 	m_pMeshMngr->Print("FPS:");
-	m_pMeshMngr->Print(std::to_string(nFPS), RERED);
+	m_pMeshMngr->PrintLine(std::to_string(nFPS), RERED);
+	m_pMeshMngr->Print("TIMER:");
+	m_pMeshMngr->Print(std::to_string(countDown), RERED);
 }
 
 void AppClass::Display(void)
@@ -219,6 +246,11 @@ void AppClass::Release(void)
 	for (uint i = 0; i < numTraps; i++)
 	{
 		SafeDelete(traps[i]);
+	}
+
+	for (uint i = 0; i < numButtons; i++)
+	{
+		SafeDelete(buttons[i]);
 	}
 
 	SafeDelete(cube);
