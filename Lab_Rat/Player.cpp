@@ -24,7 +24,7 @@ void Player::Update(bool up, bool right, bool down, bool left, bool interact)
 {
 	if (interact && !jumped)
 	{
-		m_v3Velocity.y = 0.75f;
+		//m_v3Velocity.y = 0.75f;
 		jumped = true;
 	}
 
@@ -180,7 +180,15 @@ void Player::WallCollision()
 			}//end z check
 		}//end specific wall check
 	}//end checking all walls
-}//end wallCollision()
+} //end wallCollision()
+
+
+void Player::ButtonCollision()
+{
+
+
+}
+
 
 
 void Player::SetWalls(std::vector<GameObject*> i_wall)
