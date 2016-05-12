@@ -1,6 +1,6 @@
 #include "Rat.h"
 
-Rat::Rat(String m_sMeshName) : GameObject(m_sMeshName)
+Rat::Rat(String m_sMeshName) :GameObject(m_sMeshName)
 {
 	GameObject::Init(m_sMeshName);
 	walls = std::vector<GameObject*>();
@@ -128,9 +128,9 @@ void Rat::Respawn()
 
 }
 
-void CheckTraps(std::vector<Trap*>* traps)
+void Rat::CheckTraps(std::vector<Trap*>* traps)
 {
-	for (uint i = 0; i < traps->size; i++)
+	for (uint i = 0; i < traps->size(); i++)
 	{
 		if (IsColliding(traps->at(i)) && traps->at(i)->GetEnabled())
 		{
