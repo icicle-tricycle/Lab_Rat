@@ -32,5 +32,13 @@ void Trap::Swap(Trap& other)
 
 }
 
+void Trap::AddToRenderList(bool a_bAddBox)
+{
+	if (b_isEnabled)
+	{
+		GameObject::AddToRenderList(a_bAddBox);
+	}
+}
+
 void Trap::SetEnabled(bool setTo) { b_isEnabled = setTo; }
 bool Trap::GetEnabled() { return b_isEnabled; }

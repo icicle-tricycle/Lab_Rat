@@ -18,6 +18,8 @@ public:
 
 	void Swap(Trap& other);
 
+	void AddToRenderList(bool a_bAddBox);
+
 	void SetEnabled(bool setTo);
 	bool GetEnabled();
 private:
