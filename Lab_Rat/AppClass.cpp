@@ -15,7 +15,6 @@ void AppClass::InitVariables(void)
 	fDuration = 20.0f;
 	countDown = 10.0f;
 	numButtons = 3.0f;
-	fDuration = 10.0f;
 	numTraps = 3.0f;
 
 	//cube = new GameObject("cube", vector3(0.0f), vector3(0.0f), vector3(0.0f),1.0f);
