@@ -4,16 +4,37 @@ Rat::Rat(String m_sMeshName) : GameObject(m_sMeshName)
 {
 	GameObject::Init(m_sMeshName);
 	walls = std::vector<GameObject*>();
+	alive = true;
+	fDyingDuration = 2.0f;
 }
 
 Rat::~Rat()
 {
 }
 
-void Rat::Update()
+void Rat::Update(double dTime)
 {
 	GameObject::Update();
 	WallCollision();
+
+	vector3 endPosition = vector3(deathPoint.x, deathPoint.y - 2, deathPoint.z);
+
+	if (!alive)
+	{
+		static double fRunTime = 0.0f;
+		fRunTime += dTime;
+		if (fRunTime < fDyingDuration)
+		{
+			float fPercent = MapValue(static_cast<float>(fRunTime), 0.0f, fDyingDuration, 0.0f, 1.0f);
+			vector3 v3Position = glm::lerp(deathPoint, endPosition, fPercent);
+			SetModelMatrix(glm::translate(v3Position));
+		}
+		else
+		{
+			alive = true;
+			fRunTime = 0.0f;
+		}
+	}
 }
 
 void Rat::WallCollision()
@@ -123,19 +144,19 @@ void Rat::SetWalls(std::vector<GameObject*> i_wall)
 	walls = i_wall;
 }
 
-void Rat::Respawn()
+void Rat::Respawn(vector3 pos)
 {
-
+	alive = false;
+	deathPoint = pos;
+	//SetModelMatrix(glm::translate(spawnPoint));
 }
 
-void CheckTraps(std::vector<Trap*>* traps)
+//void Rat::SetTraps(std::vector<Trap*>* t)
+//{
+//	traps = t;
+//}
+
+void Rat::SetSpawnPoint(vector3 point)
 {
-	for (uint i = 0; i < traps->size; i++)
-	{
-		if (IsColliding(traps->at(i)) && traps->at(i)->GetEnabled())
-		{
-			traps->at(i)->SetEnabled(false);
-			std::cout << "Trap Collision" << std::endl;
-		}
-	}
+	spawnPoint = point;
 }

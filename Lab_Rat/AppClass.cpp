@@ -63,6 +63,8 @@ void AppClass::InitVariables(void)
 	player->SetModelMatrix(glm::translate(vector3(0, 5, 5)));
 	player->SetVelocity(vector3(0, -.1, 0));
 
+	rat->SetSpawnPoint(vector3(-10, 0, -5));
+	//rat->SetTraps(&traps);
 	rat->SetModelMatrix(glm::translate(vector3(-10, 0, -5)));
 
 	floor->SetModelMatrix(glm::translate(vector3(0, 0, 0)));
@@ -107,7 +109,6 @@ void AppClass::Update(void)
 	//m_pMeshMngr->SetModelMatrix(ToMatrix4(m_qArcBall), 0);
 
 	player->Update();
-	rat->Update();
 
 	/*if (player->IsColliding(floor))
 	{
@@ -122,14 +123,32 @@ void AppClass::Update(void)
 
 	//cumulative time
 	static double fRunTime = 0.0f;
-	fRunTime += fTimeSpan;
-
-	if (fRunTime < fDuration)
+	if (rat->alive)
 	{
-		float fPercent = MapValue(static_cast<float>(fRunTime), 0.0f, fDuration, 0.0f, 1.0f);
-		vector3 v3Position = glm::lerp(vector3(-12, 0, -5), vector3(12, 0, -5), fPercent);
-		rat->SetModelMatrix(glm::translate(v3Position));
+		fRunTime += fTimeSpan;
+
+		if (fRunTime < fDuration)
+		{
+			float fPercent = MapValue(static_cast<float>(fRunTime), 0.0f, fDuration, 0.0f, 1.0f);
+			vector3 v3Position = glm::lerp(rat->spawnPoint, vector3(12, 0, -5), fPercent);
+			rat->SetModelMatrix(glm::translate(v3Position));
+
+			for (uint i = 0; i < numTraps; i++)
+			{
+				if (traps.at(i)->GetEnabled() && rat->IsColliding(traps.at(i)))
+				{
+					fRunTime = 0.0f;
+					rat->Respawn(v3Position);
+				}
+			}
+		}
 	}
+
+	traps.at(0)->SetEnabled(false);
+	traps.at(1)->SetEnabled(false);
+	traps.at(2)->SetEnabled(false);
+
+	rat->Update(fTimeSpan);
 
 	//add game objects to render list
 	player->AddToRenderList(true);
