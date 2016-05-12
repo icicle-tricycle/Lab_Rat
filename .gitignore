@@ -37,4 +37,7 @@ Z_DELETE
 *.opensdf
 Solution_VS15.VC.db
 
+# 3D Stuff
+*.ato
+
 *.opendb
