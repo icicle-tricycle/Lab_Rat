@@ -36,7 +36,7 @@ void AppClass::InitVariables(void)
 	
 
 	//create game objects from loaded models
-	rat = new Rat("Creeper");
+	rat = new Rat("Robot");
 	player = new Player("Player");
 
 	floor = new GameObject("Floor");
